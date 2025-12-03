@@ -31,16 +31,16 @@ export const RecipeFilters: React.FC<RecipeFiltersProps> = ({
   return (
     <div className="flex flex-wrap items-center gap-3">
       <Select
-        value={selectedSupermarket || ''}
+        value={selectedSupermarket || 'all'}
         onValueChange={(value) => 
-          onSupermarketChange(value ? (value as Supermarket) : undefined)
+          onSupermarketChange(value === 'all' ? undefined : (value as Supermarket))
         }
       >
         <SelectTrigger className="w-full sm:w-[200px]">
           <SelectValue placeholder="All Supermarkets" />
         </SelectTrigger>
         <SelectContent>
-          <SelectItem value="">All Supermarkets</SelectItem>
+          <SelectItem value="all">All Supermarkets</SelectItem>
           {SUPERMARKETS.map((sm) => (
             <SelectItem key={sm.value} value={sm.value}>
               {sm.label}
