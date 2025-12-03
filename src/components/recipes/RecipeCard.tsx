@@ -13,6 +13,7 @@ interface RecipeCardProps {
 
 export const RecipeCard: React.FC<RecipeCardProps> = ({ recipe }) => {
   const navigate = useNavigate();
+  const [imageError, setImageError] = React.useState(false);
 
   return (
     <Card 
@@ -21,15 +22,16 @@ export const RecipeCard: React.FC<RecipeCardProps> = ({ recipe }) => {
     >
       {/* Recipe Image */}
       <div className="aspect-video w-full overflow-hidden bg-muted">
-        {recipe.imageUrl ? (
+        {recipe.imageUrl && !imageError ? (
           <img
             src={recipe.imageUrl}
             alt={recipe.title}
             className="h-full w-full object-cover"
+            onError={() => setImageError(true)}
           />
         ) : (
-          <div className="h-full w-full flex items-center justify-center text-muted-foreground">
-            <span className="text-sm">No image</span>
+          <div className="h-full w-full flex items-center justify-center text-muted-foreground bg-gradient-to-br from-muted to-muted/50">
+            <span className="text-sm">🍳</span>
           </div>
         )}
       </div>
