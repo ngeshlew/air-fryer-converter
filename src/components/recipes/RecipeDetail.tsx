@@ -10,7 +10,7 @@ import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
 import { useRecipeStore } from '@/store/useRecipeStore';
 import { Skeleton } from '@/components/ui/skeleton';
-import { ArrowLeft, Clock, TrendingUp, Users, Thermometer, Timer } from 'lucide-react';
+import { ArrowLeft, Clock, TrendingUp, Users, Timer } from 'lucide-react';
 import { extractTemperatureFromInstructions, calculateAirFryerTemperature, calculateAirFryerTime } from '@/utils/recipeUtils';
 
 export const RecipeDetail: React.FC = () => {
