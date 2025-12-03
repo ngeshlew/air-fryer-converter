@@ -54,52 +54,57 @@ export const CalculatorForm: React.FC = () => {
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-6">
-        {/* Oven Temperature Input */}
-        <div className="space-y-2">
-          <Label htmlFor="oven-temp">Oven Temperature (°C)</Label>
-          <Select
-            value={ovenTemp.toString()}
-            onValueChange={(value) => setOvenTemp(parseInt(value, 10))}
-          >
-            <SelectTrigger id="oven-temp">
-              <SelectValue placeholder="Select temperature" />
-            </SelectTrigger>
-            <SelectContent>
-              {COMMON_TEMPERATURES.map((temp) => (
-                <SelectItem key={temp.celsius} value={temp.celsius.toString()}>
-                  {temp.label}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-          <p className="text-xs text-muted-foreground">
-            Or enter custom temperature (100-250°C)
-          </p>
-          <Input
-            type="number"
-            min="100"
-            max="250"
-            value={ovenTemp}
-            onChange={(e) => setOvenTemp(parseInt(e.target.value, 10) || 180)}
-            className="font-mono"
-          />
-        </div>
+        {/* Oven Temperature and Time Inputs - Side by Side */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {/* Column 1: Oven Temperature Input */}
+          <div className="space-y-2">
+            <Label htmlFor="oven-temp">Oven Temperature (°C)</Label>
+            <Select
+              value={ovenTemp.toString()}
+              onValueChange={(value) => setOvenTemp(parseInt(value, 10))}
+            >
+              <SelectTrigger id="oven-temp">
+                <SelectValue>
+                  {COMMON_TEMPERATURES.find(t => t.celsius === ovenTemp)?.label || `${ovenTemp}°C`}
+                </SelectValue>
+              </SelectTrigger>
+              <SelectContent>
+                {COMMON_TEMPERATURES.map((temp) => (
+                  <SelectItem key={temp.celsius} value={temp.celsius.toString()}>
+                    {temp.label}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+            <p className="text-xs text-muted-foreground">
+              Or enter custom temperature (100-250°C)
+            </p>
+            <Input
+              type="number"
+              min="100"
+              max="250"
+              value={ovenTemp}
+              onChange={(e) => setOvenTemp(parseInt(e.target.value, 10) || 180)}
+              className="font-mono"
+            />
+          </div>
 
-        {/* Oven Time Input */}
-        <div className="space-y-2">
-          <Label htmlFor="oven-time">Oven Time (minutes)</Label>
-          <Input
-            id="oven-time"
-            type="number"
-            min="1"
-            max="180"
-            value={ovenTime}
-            onChange={(e) => setOvenTime(parseInt(e.target.value, 10) || 30)}
-            className="font-mono"
-          />
-          <p className="text-xs text-muted-foreground">
-            Enter cooking time (1-180 minutes)
-          </p>
+          {/* Column 2: Oven Time Input */}
+          <div className="space-y-2">
+            <Label htmlFor="oven-time">Oven Time (minutes)</Label>
+            <Input
+              id="oven-time"
+              type="number"
+              min="1"
+              max="180"
+              value={ovenTime}
+              onChange={(e) => setOvenTime(parseInt(e.target.value, 10) || 30)}
+              className="font-mono"
+            />
+            <p className="text-xs text-muted-foreground">
+              Enter cooking time (1-180 minutes)
+            </p>
+          </div>
         </div>
 
         {/* Error Message */}
