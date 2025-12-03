@@ -7,6 +7,7 @@ import healthRoutes from './routes/health.js';
 import recipesRoutes from './routes/recipes.js';
 import scrapingRoutes from './routes/scraping.js';
 import { logger } from './utils/logger.js';
+import { setupScrapingJobs } from './cron/scrapingJobs.js';
 
 // Load environment variables
 config();
@@ -65,6 +66,13 @@ app.listen(PORT, () => {
   logger.info(`🚀 Server running on port ${PORT}`);
   logger.info(`📍 Environment: ${process.env.NODE_ENV || 'development'}`);
   logger.info(`🔗 API available at http://localhost:${PORT}`);
+  
+  // Setup cron jobs for automated scraping
+  if (process.env.ENABLE_SCRAPING_CRON === 'true') {
+    setupScrapingJobs();
+  } else {
+    logger.info('⏸️  Scraping cron jobs disabled (set ENABLE_SCRAPING_CRON=true to enable)');
+  }
 });
 
 // Graceful shutdown

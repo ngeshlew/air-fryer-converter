@@ -4,31 +4,62 @@ import { Router, Request, Response, NextFunction } from 'express';
 import { z } from 'zod';
 import prisma from '../utils/database.js';
 import { logger } from '../utils/logger.js';
+import { scrapingService } from '../services/scraping.service.js';
+import { Supermarket } from '@prisma/client';
 
 const router = Router();
 
 // POST /api/scraping/trigger - Manually trigger scraping
 router.post('/trigger', async (req: Request, res: Response, next: NextFunction) => {
   try {
+    // Check if scraping is already running
+    if (scrapingService.isScrapingRunning()) {
+      return res.status(409).json({
+        success: false,
+        message: 'Scraping is already in progress',
+      });
+    }
+
     const schema = z.object({
       supermarket: z.enum([
         'ALDI',
         'WAITROSE',
-        'MARKS_AND_SPENCER',
         'TESCO',
+        'MARKS_AND_SPENCER',
         'BBC_GOOD_FOOD',
         'HAPPY_FOODIE',
-      ]),
+      ]).optional(),
+      limit: z.number().min(1).max(50).optional(),
     });
 
-    const { supermarket } = schema.parse(req.body);
+    const { supermarket, limit = 10 } = schema.parse(req.body);
 
-    // TODO: Implement actual scraping service
-    logger.info(`Scraping triggered for: ${supermarket}`);
+    logger.info(`Scraping triggered${supermarket ? ` for ${supermarket}` : ' for all supermarkets'}`);
+
+    // Run scraping in background
+    if (supermarket) {
+      // Scrape specific supermarket
+      scrapingService.scrapeSupermarket(supermarket as Supermarket, limit)
+        .then((result) => {
+          logger.info(`Scraping completed for ${supermarket}:`, result);
+        })
+        .catch((error) => {
+          logger.error(`Scraping failed for ${supermarket}:`, error);
+        });
+    } else {
+      // Scrape all supermarkets
+      scrapingService.scrapeAll(limit)
+        .then((result) => {
+          logger.info('Scraping completed for all supermarkets:', result);
+        })
+        .catch((error) => {
+          logger.error('Scraping failed:', error);
+        });
+    }
 
     res.json({
       success: true,
-      message: `Scraping started for ${supermarket}`,
+      message: `Scraping started${supermarket ? ` for ${supermarket}` : ' for all supermarkets'}`,
     });
   } catch (error) {
     logger.error('Error triggering scraping:', error);
@@ -61,30 +92,14 @@ router.get('/logs', async (req: Request, res: Response, next: NextFunction) => {
 // GET /api/scraping/status - Get scraping status
 router.get('/status', async (_req: Request, res: Response, next: NextFunction) => {
   try {
-    const latestLog = await prisma.scrapingLog.findFirst({
-      orderBy: {
-        startedAt: 'desc',
-      },
-    });
-
-    if (!latestLog) {
-      return res.json({
-        success: true,
-        data: {
-          status: 'No scraping runs yet',
-          lastRun: null,
-        },
-      });
-    }
+    const stats = await scrapingService.getStats();
+    const isRunning = scrapingService.isScrapingRunning();
 
     res.json({
       success: true,
       data: {
-        status: latestLog.status,
-        lastRun: latestLog.startedAt,
-        completedAt: latestLog.completedAt,
-        recipesAdded: latestLog.recipesAdded,
-        recipesUpdated: latestLog.recipesUpdated,
+        isRunning,
+        ...stats,
       },
     });
   } catch (error) {
