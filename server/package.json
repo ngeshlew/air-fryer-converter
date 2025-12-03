@@ -18,6 +18,7 @@
     "scrape:tesco": "tsx src/scripts/scrapeSingle.ts TESCO",
     "scrape:ms": "tsx src/scripts/scrapeSingle.ts MARKS_AND_SPENCER",
     "scrape:bbc": "tsx src/scripts/scrapeSingle.ts BBC_GOOD_FOOD",
+    "check:images": "tsx src/scripts/checkImageUrls.ts",
     "lint": "eslint . --ext .ts",
     "format": "prettier --write \"src/**/*.ts\""
   },
