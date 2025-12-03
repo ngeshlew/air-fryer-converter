@@ -1,0 +1,364 @@
+/* IBM Plex Mono Font Faces */
+@font-face {
+  font-family: IBM Plex Mono;
+  font-style: normal;
+  font-weight: 100;
+  font-display: swap;
+  src: url(../fonts/5849aa7d99f8e15e-s.p.ea0ea436.woff2) format("woff2");
+  unicode-range: U+??,U+131,U+152-153,U+2BB-2BC,U+2C6,U+2DA,U+2DC,U+304,U+308,U+329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+}
+
+@font-face {
+  font-family: IBM Plex Mono;
+  font-style: normal;
+  font-weight: 200;
+  font-display: swap;
+  src: url(../fonts/f0b856f7f1c4bda0-s.p.0a1731ba.woff2) format("woff2");
+  unicode-range: U+??,U+131,U+152-153,U+2BB-2BC,U+2C6,U+2DA,U+2DC,U+304,U+308,U+329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+}
+
+@font-face {
+  font-family: IBM Plex Mono;
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url(../fonts/e9d5b069f63ab620-s.p.c6182c6b.woff2) format("woff2");
+  unicode-range: U+??,U+131,U+152-153,U+2BB-2BC,U+2C6,U+2DA,U+2DC,U+304,U+308,U+329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+}
+
+@font-face {
+  font-family: IBM Plex Mono;
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(../fonts/99e609270109b47d-s.p.64b9304e.woff2) format("woff2");
+  unicode-range: U+??,U+131,U+152-153,U+2BB-2BC,U+2C6,U+2DA,U+2DC,U+304,U+308,U+329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+}
+
+@font-face {
+  font-family: IBM Plex Mono;
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url(../fonts/effe91970fc4db64-s.p.19510058.woff2) format("woff2");
+  unicode-range: U+??,U+131,U+152-153,U+2BB-2BC,U+2C6,U+2DA,U+2DC,U+304,U+308,U+329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+}
+
+@font-face {
+  font-family: IBM Plex Mono;
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url(../fonts/23b7a97ae3b5c134-s.p.2902b61f.woff2) format("woff2");
+  unicode-range: U+??,U+131,U+152-153,U+2BB-2BC,U+2C6,U+2DA,U+2DC,U+304,U+308,U+329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+}
+
+@font-face {
+  font-family: IBM Plex Mono;
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url(../fonts/a7e15459c1805da0-s.p.ec654d65.woff2) format("woff2");
+  unicode-range: U+??,U+131,U+152-153,U+2BB-2BC,U+2C6,U+2DA,U+2DC,U+304,U+308,U+329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+}
+
+@font-face {
+  font-family: IBM Plex Mono Fallback;
+  src: local(Arial);
+  ascent-override: 76.16%;
+  descent-override: 20.43%;
+  line-gap-override: 0.0%;
+  size-adjust: 134.59%;
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --primary: oklch(0.677 0.203 40.381);
+    --accent: oklch(0.968 0.007 247.896);
+    --border: oklch(0.929 0.013 255.508);
+    --card-foreground: oklch(0.282 0.087 267.935);
+    --foreground: oklch(0.282 0.087 267.935);
+    --input: oklch(0.929 0.013 255.508);
+    --muted: oklch(0.984 0.003 247.858);
+    --popover-foreground: oklch(0.282 0.087 267.935);
+    --primary-foreground: oklch(1.000 0.000 0.000);
+    --ring: oklch(0.677 0.203 40.381 / 0.1);
+    --secondary: oklch(0.981 0.009 258.335);
+    --secondary-foreground: oklch(0.282 0.087 267.935);
+    --muted-foreground: oklch(0.450 0.054 272.586); /* Improved contrast: ~4.8:1 ratio for WCAG AA */
+    --color-text-tertiary: #777777; /* Was #999999 - Now 4.7:1 contrast - passes AA */
+    --chart-1: oklch(0.677 0.203 40.381);
+    --sidebar-foreground: oklch(0.282 0.087 267.935);
+    --sidebar: oklch(0.984 0.003 247.858);
+    --sidebar-primary: oklch(0.282 0.087 267.935);
+    --sidebar-primary-foreground: oklch(1.000 0.000 0.000);
+    --sidebar-accent: oklch(0.968 0.007 247.896);
+    --sidebar-accent-foreground: oklch(0.282 0.087 267.935);
+    --sidebar-border: oklch(0.929 0.013 255.508);
+    --sidebar-ring: oklch(0.929 0.013 255.508);
+    --shadow-2xs: 0 1px 0 0 oklch(0.554 0.041 257.417 / 0.05);
+    --shadow-xs: 0 1px 2px 0 oklch(0.554 0.041 257.417 / 0.05);
+    --shadow-sm: 0 1px 3px 0 oklch(0.554 0.041 257.417 / 0.1), 0 1px 2px -1px oklch(0.554 0.041 257.417 / 0.1);
+    --shadow-md: 0 4px 6px -1px oklch(0.554 0.041 257.417 / 0.1), 0 2px 4px -2px oklch(0.554 0.041 257.417 / 0.1);
+    --shadow-xl: 0 20px 25px -5px oklch(0.000 0.000 0.000 / 0.1), 0 8px 10px -6px oklch(0.554 0.041 257.417 / 0.1);
+    --shadow-2xl: 0 25px 50px -12px oklch(0.554 0.041 257.417 / 0.15);
+
+    /* Design System Variables - Timezone-inspired */
+    /* Typography */
+    --font-mono: "IBM Plex Mono", "IBM Plex Mono Fallback", SF Mono, Monaco, Inconsolata, "Roboto Mono", "Oxygen Mono", "Ubuntu Monospace", "Source Code Pro", "Fira Mono", "Droid Sans Mono", "Courier New", monospace;
+    --text-xs: 11px;
+    --text-sm: 13px;
+    --text-base: 14px;
+    --text-lg: 18px;
+    --text-xl: 24px;
+    --text-2xl: 32px;
+    --text-3xl: 40px;
+    --letter-spacing-tight: 0.5px;
+    --letter-spacing-normal: 1px;
+    --letter-spacing-wide: 2px;
+
+    /* Spacing Scale */
+    --space-xs: 4px;
+    --space-sm: 8px;
+    --space-md: 16px;
+    --space-lg: 24px;
+    --space-xl: 32px;
+    --space-2xl: 48px;
+    --space-3xl: 64px;
+    --space-4xl: 96px;
+
+    /* Borders */
+    --border-width: 1px;
+    --border-radius-sm: 4px;
+    --border-radius-md: 8px;
+    --border-radius-lg: 12px;
+    --border-radius-full: 9999px;
+
+    /* Transitions */
+    --transition-fast: 150ms ease-in-out;
+    --transition-base: 200ms ease-in-out;
+    --transition-slow: 300ms ease-in-out;
+
+    /* Accent Colors */
+    --color-accent-red: #FF0000;
+    --color-success: #00AA00;
+    --color-warning: #FF6600;
+    --color-error: #FF0000;
+
+    /* Seasonal Colors */
+    --color-season-winter: #3B82F6; /* Blue */
+    --color-season-spring: #10B981; /* Green */
+    --color-season-summer: rgb(255, 220, 0); /* Yellow-ish */
+    --color-season-autumn: rgb(255, 140, 0); /* Orange */
+
+    /* Timezone-inspired Colors */
+    --color-bg: #FFFFFF;
+    --color-bg-subtle: #FFFFFF;
+    --color-border: #E8E8E8;
+    --color-border-strong: #CCCCCC;
+  }
+
+  .dark {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+    --primary: 210 40% 98%;
+    --primary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 75%; /* Improved contrast for dark mode: ~4.5:1 ratio */
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 212.7 26.8% 83.9%;
+    --chart-1: 220 70% 50%;
+    --chart-2: 160 60% 45%;
+    --chart-3: 30 80% 55%;
+    --chart-4: 280 65% 60%;
+    --chart-5: 340 75% 55%;
+    --sidebar-background: 240 5.9% 10%;
+    --sidebar-foreground: 240 4.8% 95.9%;
+    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-accent-foreground: 240 4.8% 95.9%;
+    --sidebar-border: 240 3.7% 15.9%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+
+    /* Design System Variables - Dark Mode */
+    --color-accent-red: #FF4444;
+    --color-success: #44AA44;
+    --color-warning: #FF8844;
+    --color-error: #FF4444;
+  }
+
+  .mono {
+    --background: 0 0% 100%;
+    --foreground: 0 0% 0%;
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 0%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 0%;
+    --primary: 0 0% 0%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 0 0% 96%;
+    --secondary-foreground: 0 0% 0%;
+    --muted: 0 0% 96%;
+    --muted-foreground: 0 0% 45%;
+    --accent: 0 0% 96%;
+    --accent-foreground: 0 0% 0%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 0 0% 90%;
+    --input: 0 0% 90%;
+    --ring: 0 0% 0%;
+    --chart-1: 0 0% 0%;
+    --chart-2: 0 0% 25%;
+    --chart-3: 0 0% 50%;
+    --chart-4: 0 0% 75%;
+    --chart-5: 0 0% 100%;
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 0 0% 0%;
+    --sidebar-primary: 0 0% 0%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 0 0% 96%;
+    --sidebar-accent-foreground: 0 0% 0%;
+    --sidebar-border: 0 0% 90%;
+    --sidebar-ring: 0 0% 0%;
+  }
+
+  .mono * {
+    font-family: "IBM Plex Mono", "IBM Plex Mono Fallback", SF Mono, Monaco, Inconsolata, "Roboto Mono", "Oxygen Mono", "Ubuntu Monospace", "Source Code Pro", "Fira Mono", "Droid Sans Mono", "Courier New", monospace;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+    border-radius: 0 !important;
+  }
+  html, body {
+    overflow-x: hidden;
+  }
+  
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+@layer utilities {
+  .bg-diagonal-lines {
+    background-image: repeating-linear-gradient(
+      -45deg,
+      hsl(var(--background)),
+      hsl(var(--border)) 1px,
+      hsl(var(--background)) 1px,
+      hsl(var(--background)) 8px
+    );
+  }
+  
+  .bg-grid-pattern {
+    background-image: 
+      linear-gradient(hsl(var(--border)) 1px, transparent 1px),
+      linear-gradient(90deg, hsl(var(--border)) 1px, transparent 1px);
+    background-size: 20px 20px;
+  }
+  
+  .bg-dot-pattern {
+    background-image: radial-gradient(circle, hsl(var(--border)) 1px, transparent 1px);
+    background-size: 20px 20px;
+  }
+
+  /* Skeleton Loading Animation - Improved with better visual feedback */
+  @keyframes skeleton-pulse {
+    0%, 100% { 
+      opacity: 1; 
+    }
+    50% { 
+      opacity: 0.5; 
+    }
+  }
+
+  .skeleton {
+    background: linear-gradient(
+      90deg,
+      oklch(var(--muted)) 0%,
+      oklch(var(--muted) / 0.5) 50%,
+      oklch(var(--muted)) 100%
+    );
+    background-size: 200% 100%;
+    animation: skeleton-shimmer 1.5s ease-in-out infinite;
+    border-radius: 4px;
+  }
+
+  @keyframes skeleton-shimmer {
+    0% {
+      background-position: -200% 0;
+    }
+    100% {
+      background-position: 200% 0;
+    }
+  }
+
+  .skeleton--text {
+    height: 1em;
+  }
+
+  /* Keyboard Shortcut Indicator */
+  .button__shortcut {
+    margin-left: var(--space-sm);
+    padding: 2px 6px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 4px;
+    font-size: 10px;
+    font-family: var(--font-mono);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .dark .button__shortcut {
+    background: rgba(0, 0, 0, 0.3);
+  }
+
+  /* Universal Dotted Border Utility */
+  .border-dotted {
+    border-style: dotted !important;
+  }
+
+  /* Remove all shadows */
+  .no-shadow {
+    box-shadow: none !important;
+  }
+
+  /* Pure white/black backgrounds only */
+  .bg-pure {
+    background: var(--color-bg) !important;
+  }
+
+  /* Subtle hover - opacity only */
+  .hover-subtle:hover {
+    opacity: 0.85;
+    transition: opacity var(--transition-base);
+  }
+
+  /* Rounded-full with important */
+  .rounded-full {
+    border-radius: 9999px !important;
+  }
+
+  /* Font-normal uses weight 300 */
+  .font-normal {
+    font-weight: 300 !important;
+  }
+}
