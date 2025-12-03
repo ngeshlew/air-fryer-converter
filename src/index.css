@@ -202,6 +202,14 @@
 }
 
 @layer utilities {
+  /* Force solid backgrounds for select/dropdown components */
+  [data-radix-select-content],
+  [role="listbox"],
+  [data-radix-select-viewport] {
+    background-color: hsl(var(--background)) !important;
+    opacity: 1 !important;
+  }
+
   .bg-diagonal-lines {
     background-image: repeating-linear-gradient(
       -45deg,
