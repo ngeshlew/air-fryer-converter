@@ -10,7 +10,7 @@ const router = Router();
 // GET /api/recipes - List all recipes with filters
 router.get('/', async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const { supermarket, search, featured, limit = '20', offset = '0' } = req.query;
+    const { supermarket, search, featured, limit = '100', offset = '0' } = req.query;
 
     const where: any = {
       isActive: true,
