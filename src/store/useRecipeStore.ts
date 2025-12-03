@@ -104,14 +104,14 @@ export const useRecipeStore = create<RecipeStore>((set, get) => ({
 
   // Search recipes by query
   searchRecipes: async (query: string) => {
-    const newFilters = { ...get().filters, search: query };
+    const newFilters = { ...get().filters, search: query, limit: 100 };
     set({ filters: newFilters });
     await get().loadRecipes(newFilters);
   },
 
   // Filter recipes by supermarket
   filterBySupermarket: async (supermarket: Supermarket | undefined) => {
-    const newFilters = { ...get().filters, supermarket };
+    const newFilters = { ...get().filters, supermarket, limit: 100 };
     set({ filters: newFilters });
     await get().loadRecipes(newFilters);
   },

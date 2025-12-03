@@ -16,7 +16,7 @@ export const RecipeBrowser: React.FC = () => {
   const { recipes, isLoading, error, filters, loadRecipes, searchRecipes, filterBySupermarket, clearFilters } = useRecipeStore();
 
   useEffect(() => {
-    loadRecipes();
+    loadRecipes({ limit: 100 });
   }, [loadRecipes]);
 
   const handleSearch = (query: string) => {
@@ -29,6 +29,7 @@ export const RecipeBrowser: React.FC = () => {
 
   const handleClearFilters = () => {
     clearFilters();
+    loadRecipes({ limit: 100 });
   };
 
   return (
