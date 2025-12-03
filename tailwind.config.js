@@ -18,20 +18,18 @@ module.exports = {
   	},
   	extend: {
 		fontFamily: {
-			sans: [
-				'-apple-system',
-				'BlinkMacSystemFont',
-				'Segoe UI',
-				'Roboto',
-				'Helvetica Neue',
-				'Arial',
-				'sans-serif'
-			],
 			mono: [
+				'IBM Plex Mono',
+				'IBM Plex Mono Fallback',
 				'SF Mono',
 				'Monaco',
-				'Consolas',
-				'Liberation Mono',
+				'Inconsolata',
+				'Roboto Mono',
+				'Oxygen Mono',
+				'Ubuntu Monospace',
+				'Source Code Pro',
+				'Fira Mono',
+				'Droid Sans Mono',
 				'Courier New',
 				'monospace'
 			]
