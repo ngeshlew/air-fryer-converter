@@ -1,0 +1,76 @@
+// Air Fryer Converter Database Schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Recipe {
+  id            String       @id @default(cuid())
+  title         String
+  description   String?      @db.Text
+  imageUrl      String?      @map("image_url")
+  sourceUrl     String       @unique @map("source_url")
+  supermarket   Supermarket
+  cookTime      Int?         @map("cook_time") // in minutes
+  prepTime      Int?         @map("prep_time") // in minutes
+  difficulty    Difficulty?
+  servings      Int?
+  ingredients   Json         // Array of strings
+  instructions  Json         // Array of steps
+  tags          String[]     // e.g., ["vegetarian", "quick", "budget"]
+  scrapedAt     DateTime     @default(now()) @map("scraped_at")
+  lastUpdated   DateTime     @updatedAt @map("last_updated")
+  isActive      Boolean      @default(true) @map("is_active")
+  isFeatured    Boolean      @default(false) @map("is_featured")
+  
+  @@map("recipes")
+  @@index([supermarket])
+  @@index([isFeatured])
+  @@index([isActive])
+  @@index([scrapedAt])
+}
+
+enum Supermarket {
+  ALDI
+  WAITROSE
+  MARKS_AND_SPENCER
+  TESCO
+  BBC_GOOD_FOOD
+  HAPPY_FOODIE
+}
+
+enum Difficulty {
+  EASY
+  MEDIUM
+  HARD
+}
+
+model ScrapingLog {
+  id             String         @id @default(cuid())
+  supermarket    Supermarket
+  startedAt      DateTime       @default(now()) @map("started_at")
+  completedAt    DateTime?      @map("completed_at")
+  status         ScrapingStatus
+  recipesFound   Int            @default(0) @map("recipes_found")
+  recipesAdded   Int            @default(0) @map("recipes_added")
+  recipesUpdated Int            @default(0) @map("recipes_updated")
+  errorMessage   String?        @db.Text @map("error_message")
+  
+  @@map("scraping_logs")
+  @@index([supermarket])
+  @@index([status])
+  @@index([startedAt])
+}
+
+enum ScrapingStatus {
+  PENDING
+  IN_PROGRESS
+  COMPLETED
+  FAILED
+}
+
