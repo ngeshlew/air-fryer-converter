@@ -17,23 +17,25 @@ module.exports = {
   		}
   	},
   	extend: {
-  		fontFamily: {
-  			mono: [
-  				'IBM Plex Mono',
-  				'IBM Plex Mono Fallback',
-  				'SF Mono',
-  				'Monaco',
-  				'Inconsolata',
-  				'Roboto Mono',
-  				'Oxygen Mono',
-  				'Ubuntu Monospace',
-  				'Source Code Pro',
-  				'Fira Mono',
-  				'Droid Sans Mono',
-  				'Courier New',
-  				'monospace'
-  			]
-  		},
+		fontFamily: {
+			sans: [
+				'-apple-system',
+				'BlinkMacSystemFont',
+				'Segoe UI',
+				'Roboto',
+				'Helvetica Neue',
+				'Arial',
+				'sans-serif'
+			],
+			mono: [
+				'SF Mono',
+				'Monaco',
+				'Consolas',
+				'Liberation Mono',
+				'Courier New',
+				'monospace'
+			]
+		},
   		colors: {
   			border: 'hsl(var(--border))',
   			input: 'hsl(var(--input))',
