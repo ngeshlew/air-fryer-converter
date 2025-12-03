@@ -89,17 +89,17 @@ export class AldiScraper extends BaseScraper {
       // Extract recipe data
       const recipeData = await this.page.evaluate(() => {
         // Helper function to get text content
-        const getText = (selector: string): string | null => {
+        const getText = (selector) => {
           const element = document.querySelector(selector);
           return element?.textContent?.trim() || null;
         };
 
         // Helper function to get all text contents
-        const getAllText = (selector: string): string[] => {
+        const getAllText = (selector) => {
           const elements = Array.from(document.querySelectorAll(selector));
           return elements
             .map(el => el.textContent?.trim())
-            .filter(text => text !== null && text !== undefined && text !== '') as string[];
+            .filter(text => text !== null && text !== undefined && text !== '');
         };
 
         // Get title
@@ -124,9 +124,9 @@ export class AldiScraper extends BaseScraper {
           'main img'
         ];
         
-        let imageUrl: string | null = null;
+        let imageUrl = null;
         for (const selector of imageSelectors) {
-          const img = document.querySelector(selector) as HTMLImageElement;
+          const img = document.querySelector(selector);
           if (img && img.src) {
             // Skip data URIs and very small images
             if (!img.src.startsWith('data:') && img.naturalWidth > 200) {
@@ -164,7 +164,7 @@ export class AldiScraper extends BaseScraper {
           el.textContent?.toLowerCase().includes('ingredient')
         );
         const ingredients = ingredientsHeader?.nextElementSibling?.querySelectorAll('li') ?
-                          Array.from(ingredientsHeader.nextElementSibling.querySelectorAll('li')).map(li => li.textContent?.trim()).filter(Boolean) as string[] :
+                          Array.from(ingredientsHeader.nextElementSibling.querySelectorAll('li')).map(li => li.textContent?.trim()).filter(Boolean) :
                           getAllText('[class*="ingredient"] li') || 
                           getAllText('[class*="Ingredient"] li') ||
                           getAllText('ul li').filter(text => 

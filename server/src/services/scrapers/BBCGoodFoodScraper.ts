@@ -60,16 +60,16 @@ export class BBCGoodFoodScraper extends BaseScraper {
 
       // Extract recipe data
       const recipeData = await this.page.evaluate(() => {
-        const getText = (selector: string): string | null => {
+        const getText = (selector) => {
           const element = document.querySelector(selector);
           return element?.textContent?.trim() || null;
         };
 
-        const getAllText = (selector: string): string[] => {
+        const getAllText = (selector) => {
           const elements = Array.from(document.querySelectorAll(selector));
           return elements
             .map(el => el.textContent?.trim())
-            .filter(text => text !== null && text !== undefined && text !== '') as string[];
+            .filter(text => text !== null && text !== undefined && text !== '');
         };
 
         // Get title
@@ -96,9 +96,9 @@ export class BBCGoodFoodScraper extends BaseScraper {
           'main img'
         ];
         
-        let imageUrl: string | null = null;
+        let imageUrl = null;
         for (const selector of imageSelectors) {
-          const img = document.querySelector(selector) as HTMLImageElement;
+          const img = document.querySelector(selector);
           if (img && img.src) {
             if (!img.src.startsWith('data:') && img.naturalWidth > 200) {
               imageUrl = img.src;
@@ -146,7 +146,7 @@ export class BBCGoodFoodScraper extends BaseScraper {
           el.textContent?.toLowerCase().includes('ingredient')
         );
         const ingredients = ingredientsHeader?.nextElementSibling?.querySelectorAll('li') ?
-                          Array.from(ingredientsHeader.nextElementSibling.querySelectorAll('li')).map(li => li.textContent?.trim()).filter(Boolean) as string[] :
+                          Array.from(ingredientsHeader.nextElementSibling.querySelectorAll('li')).map(li => li.textContent?.trim()).filter(Boolean) :
                           getAllText('[class*="ingredient"] li') || 
                           getAllText('[class*="Ingredient"] li') ||
                           getAllText('ul li').filter(text => 
@@ -159,7 +159,7 @@ export class BBCGoodFoodScraper extends BaseScraper {
           el.textContent?.toLowerCase().includes('instruction')
         );
         const instructions = methodHeader?.nextElementSibling?.querySelectorAll('ol li, li') ?
-                          Array.from(methodHeader.nextElementSibling.querySelectorAll('ol li, li')).map(li => li.textContent?.trim()).filter(Boolean) as string[] :
+                          Array.from(methodHeader.nextElementSibling.querySelectorAll('ol li, li')).map(li => li.textContent?.trim()).filter(Boolean) :
                           getAllText('[class*="instruction"] li') || 
                           getAllText('[class*="Instruction"] li') ||
                           getAllText('[class*="method"] li') ||

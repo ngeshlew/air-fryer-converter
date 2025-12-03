@@ -53,16 +53,16 @@ export class WaitroseScraper extends BaseScraper {
 
       // Extract recipe data
       const recipeData = await this.page.evaluate(() => {
-        const getText = (selector: string): string | null => {
+        const getText = (selector) => {
           const element = document.querySelector(selector);
           return element?.textContent?.trim() || null;
         };
 
-        const getAllText = (selector: string): string[] => {
+        const getAllText = (selector) => {
           const elements = Array.from(document.querySelectorAll(selector));
           return elements
             .map(el => el.textContent?.trim())
-            .filter(text => text !== null && text !== undefined && text !== '') as string[];
+            .filter(text => text !== null && text !== undefined && text !== '');
         };
 
         const title = getText('h1') || getText('[class*="RecipeTitle"]');
@@ -82,9 +82,9 @@ export class WaitroseScraper extends BaseScraper {
           'main img'
         ];
         
-        let imageUrl: string | null = null;
+        let imageUrl = null;
         for (const selector of imageSelectors) {
-          const img = document.querySelector(selector) as HTMLImageElement;
+          const img = document.querySelector(selector);
           if (img && img.src) {
             if (!img.src.startsWith('data:') && img.naturalWidth > 200) {
               imageUrl = img.src;
