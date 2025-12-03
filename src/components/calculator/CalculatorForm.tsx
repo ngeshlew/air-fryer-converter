@@ -112,7 +112,10 @@ export const CalculatorForm: React.FC = () => {
 
         {/* Action Buttons */}
         <div className="flex gap-3">
-          <Button onClick={handleCalculate} className="flex-1">
+          <Button 
+            onClick={handleCalculate} 
+            className="flex-1 bg-[hsl(0,84%,60%)] hover:bg-[hsl(0,84%,55%)] text-white"
+          >
             Calculate
           </Button>
           <Button onClick={handleReset} variant="outline">

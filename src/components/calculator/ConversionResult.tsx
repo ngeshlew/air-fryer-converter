@@ -12,18 +12,18 @@ interface ConversionResultDisplayProps {
 export const ConversionResultDisplay: React.FC<ConversionResultDisplayProps> = ({ result }) => {
   return (
     <div className="space-y-4 mt-6 pt-6 border-t border-dotted">
-      <h3 className="text-sm font-medium uppercase tracking-wide text-muted-foreground">
+      <h3 className="text-sm font-medium uppercase tracking-wide text-[hsl(0,84%,60%)]">
         Air Fryer Settings
       </h3>
 
       {/* Temperature Result */}
       <div className="flex items-start gap-3">
         <div className="mt-1">
-          <Thermometer className="h-5 w-5 text-primary" />
+          <Thermometer className="h-5 w-5 text-[hsl(0,84%,60%)]" />
         </div>
         <div className="flex-1">
           <p className="text-sm text-muted-foreground">Temperature</p>
-          <p className="text-2xl font-mono font-semibold">
+          <p className="text-2xl font-mono font-semibold text-[hsl(0,84%,60%)]">
             {result.airFryerTemp}°C
           </p>
           <p className="text-xs text-muted-foreground mt-1">
@@ -37,11 +37,11 @@ export const ConversionResultDisplay: React.FC<ConversionResultDisplayProps> = (
       {/* Time Result */}
       <div className="flex items-start gap-3">
         <div className="mt-1">
-          <Timer className="h-5 w-5 text-primary" />
+          <Timer className="h-5 w-5 text-[hsl(0,84%,60%)]" />
         </div>
         <div className="flex-1">
           <p className="text-sm text-muted-foreground">Cooking Time</p>
-          <p className="text-2xl font-mono font-semibold">
+          <p className="text-2xl font-mono font-semibold text-[hsl(0,84%,60%)]">
             {result.airFryerTime} minutes
           </p>
           <p className="text-xs text-muted-foreground mt-1">
@@ -55,12 +55,12 @@ export const ConversionResultDisplay: React.FC<ConversionResultDisplayProps> = (
       {/* Check Time Tip */}
       <div className="flex items-start gap-3 p-3 bg-accent rounded-md">
         <div className="mt-0.5">
-          <Lightbulb className="h-4 w-4 text-primary" />
+          <Lightbulb className="h-4 w-4 text-[hsl(0,84%,60%)]" />
         </div>
         <div className="flex-1">
-          <p className="text-sm font-medium">Pro Tip</p>
+          <p className="text-sm font-medium text-[hsl(0,84%,60%)]">Pro Tip</p>
           <p className="text-sm text-muted-foreground mt-1">
-            Start checking your food at <span className="font-mono font-semibold">{result.checkTime} minutes</span> to prevent overcooking
+            Start checking your food at <span className="font-mono font-semibold text-[hsl(0,84%,60%)]">{result.checkTime} minutes</span> to prevent overcooking
           </p>
         </div>
       </div>
