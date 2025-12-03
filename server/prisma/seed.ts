@@ -607,6 +607,631 @@ const sampleRecipes = [
       'Garnish with sesame seeds'
     ],
     tags: ['tofu', 'vegan', 'protein', 'asian', 'crispy']
+  },
+  {
+    title: 'Air Fryer Chicken Tikka',
+    description: 'Tender, spiced chicken tikka with authentic Indian flavors. Perfect with naan and raita.',
+    supermarket: Supermarket.WAITROSE,
+    sourceUrl: 'https://www.waitrose.com/recipes/chicken-tikka',
+    imageUrl: 'https://images.unsplash.com/photo-1599487488170-d11ec9c172f0?w=800',
+    prepTime: 120,
+    cookTime: 15,
+    servings: 4,
+    difficulty: Difficulty.MEDIUM,
+    ingredients: [
+      '500g chicken breast, cubed',
+      '200ml Greek yogurt',
+      '2 tbsp tikka masala paste',
+      '2 cloves garlic, minced',
+      '1 tbsp lemon juice',
+      '1 tsp garam masala',
+      'Fresh coriander',
+      'Salt to taste'
+    ],
+    instructions: [
+      'Mix yogurt, tikka paste, garlic, lemon juice, and spices',
+      'Add chicken cubes and marinate for 2 hours',
+      'Thread chicken onto skewers',
+      'Preheat air fryer to 200°C',
+      'Cook for 12-15 minutes, turning once',
+      'Serve with naan bread and raita',
+      'Garnish with fresh coriander'
+    ],
+    tags: ['chicken', 'indian', 'tikka', 'spicy', 'protein']
+  },
+  {
+    title: 'Sweet Potato Fries',
+    description: 'Crispy sweet potato fries with a hint of paprika. Healthier than regular fries.',
+    supermarket: Supermarket.TESCO,
+    sourceUrl: 'https://realfood.tesco.com/recipes/sweet-potato-fries',
+    imageUrl: 'https://images.unsplash.com/photo-1630384082525-3ea7d86f08ca?w=800',
+    prepTime: 10,
+    cookTime: 20,
+    servings: 3,
+    difficulty: Difficulty.EASY,
+    ingredients: [
+      '3 large sweet potatoes',
+      '2 tbsp olive oil',
+      '1 tsp paprika',
+      '1/2 tsp garlic powder',
+      '1/2 tsp salt',
+      'Fresh parsley for garnish'
+    ],
+    instructions: [
+      'Cut sweet potatoes into thin fries',
+      'Toss with oil and seasonings',
+      'Preheat air fryer to 200°C',
+      'Cook for 15-20 minutes, shaking every 5 minutes',
+      'Fries should be golden and crispy',
+      'Garnish with fresh parsley',
+      'Serve with aioli or ketchup'
+    ],
+    tags: ['sweet potato', 'fries', 'vegan', 'side dish', 'healthy']
+  },
+  {
+    title: 'Air Fryer Scotch Eggs',
+    description: 'Classic British scotch eggs with a crispy coating. Perfect picnic food.',
+    supermarket: Supermarket.MARKS_AND_SPENCER,
+    sourceUrl: 'https://www.marksandspencer.com/recipes/scotch-eggs',
+    imageUrl: 'https://images.unsplash.com/photo-1587486913049-53fc88980cfc?w=800',
+    prepTime: 25,
+    cookTime: 15,
+    servings: 4,
+    difficulty: Difficulty.HARD,
+    ingredients: [
+      '4 eggs, hard-boiled and peeled',
+      '400g sausage meat',
+      '100g flour',
+      '2 eggs, beaten',
+      '150g breadcrumbs',
+      '1 tsp mixed herbs',
+      'Salt and pepper',
+      'Cooking spray'
+    ],
+    instructions: [
+      'Divide sausage meat into 4 portions',
+      'Wrap each hard-boiled egg with sausage meat',
+      'Coat in flour, then beaten egg, then breadcrumbs',
+      'Spray with cooking spray',
+      'Preheat air fryer to 180°C',
+      'Cook for 12-15 minutes until golden',
+      'Cut in half and serve'
+    ],
+    tags: ['eggs', 'sausage', 'british', 'picnic', 'lunch']
+  },
+  {
+    title: 'Halloumi Fries with Honey',
+    description: 'Crispy halloumi fries drizzled with honey. Sweet and salty perfection.',
+    supermarket: Supermarket.WAITROSE,
+    sourceUrl: 'https://www.waitrose.com/recipes/halloumi-fries',
+    imageUrl: 'https://images.unsplash.com/photo-1619096252214-9f82a13d9870?w=800',
+    prepTime: 5,
+    cookTime: 10,
+    servings: 2,
+    difficulty: Difficulty.EASY,
+    ingredients: [
+      '250g halloumi cheese',
+      '2 tbsp plain flour',
+      '1 tsp dried oregano',
+      'Black pepper',
+      '2 tbsp honey',
+      'Lemon wedges',
+      'Fresh mint leaves'
+    ],
+    instructions: [
+      'Cut halloumi into thick fries',
+      'Coat lightly in flour and oregano',
+      'Preheat air fryer to 200°C',
+      'Cook for 8-10 minutes until golden',
+      'Drizzle with honey',
+      'Add squeeze of lemon',
+      'Garnish with fresh mint'
+    ],
+    tags: ['halloumi', 'cheese', 'vegetarian', 'appetizer', 'honey']
+  },
+  {
+    title: 'Air Fryer Doughnuts',
+    description: 'Light and fluffy doughnuts without deep frying. Dust with sugar while warm.',
+    supermarket: Supermarket.ALDI,
+    sourceUrl: 'https://www.aldi.co.uk/recipes/doughnuts',
+    imageUrl: 'https://images.unsplash.com/photo-1551024506-0bccd828d307?w=800',
+    prepTime: 90,
+    cookTime: 8,
+    servings: 8,
+    difficulty: Difficulty.MEDIUM,
+    ingredients: [
+      '250g plain flour',
+      '50g caster sugar',
+      '7g instant yeast',
+      '150ml warm milk',
+      '50g butter, melted',
+      '1 egg',
+      'Pinch of salt',
+      'Cinnamon sugar for coating',
+      'Cooking spray'
+    ],
+    instructions: [
+      'Mix flour, sugar, yeast, and salt',
+      'Add warm milk, butter, and egg',
+      'Knead into smooth dough',
+      'Let rise for 1 hour until doubled',
+      'Shape into doughnut rings',
+      'Spray with cooking spray',
+      'Preheat air fryer to 160°C',
+      'Cook for 6-8 minutes until golden',
+      'Coat in cinnamon sugar while warm'
+    ],
+    tags: ['doughnuts', 'dessert', 'sweet', 'breakfast', 'baking']
+  },
+  {
+    title: 'Crispy Air Fryer Duck Breast',
+    description: 'Restaurant-quality duck with crispy skin. Serve with orange sauce.',
+    supermarket: Supermarket.WAITROSE,
+    sourceUrl: 'https://www.waitrose.com/recipes/duck-breast',
+    imageUrl: 'https://images.unsplash.com/photo-1619149877002-4f8b6ed6c148?w=800',
+    prepTime: 10,
+    cookTime: 18,
+    servings: 2,
+    difficulty: Difficulty.MEDIUM,
+    ingredients: [
+      '2 duck breasts',
+      '1 tsp five-spice powder',
+      'Salt and pepper',
+      'Orange marmalade for glaze',
+      'Fresh thyme'
+    ],
+    instructions: [
+      'Score duck skin in a crosshatch pattern',
+      'Season with five-spice, salt, and pepper',
+      'Place skin-side up in air fryer',
+      'Preheat air fryer to 180°C',
+      'Cook for 15-18 minutes for medium',
+      'Brush with marmalade in last 2 minutes',
+      'Rest for 5 minutes before slicing'
+    ],
+    tags: ['duck', 'fancy', 'dinner', 'crispy', 'asian']
+  },
+  {
+    title: 'Air Fryer Cauliflower Wings',
+    description: 'Spicy buffalo cauliflower wings. Perfect vegan alternative to chicken wings.',
+    supermarket: Supermarket.TESCO,
+    sourceUrl: 'https://realfood.tesco.com/recipes/cauliflower-wings',
+    imageUrl: 'https://images.unsplash.com/photo-1610057099443-fde8c4d50f91?w=800',
+    prepTime: 15,
+    cookTime: 20,
+    servings: 4,
+    difficulty: Difficulty.EASY,
+    ingredients: [
+      '1 large cauliflower, cut into florets',
+      '100g flour',
+      '120ml plant milk',
+      '1 tsp garlic powder',
+      '120ml buffalo sauce',
+      '2 tbsp melted vegan butter',
+      'Ranch dressing for dipping',
+      'Celery sticks'
+    ],
+    instructions: [
+      'Mix flour, plant milk, and garlic powder',
+      'Coat cauliflower in batter',
+      'Preheat air fryer to 200°C',
+      'Cook for 15 minutes, shaking halfway',
+      'Mix buffalo sauce with melted butter',
+      'Toss cooked cauliflower in sauce',
+      'Return to air fryer for 5 minutes',
+      'Serve with ranch and celery'
+    ],
+    tags: ['cauliflower', 'vegan', 'buffalo', 'wings', 'spicy']
+  },
+  {
+    title: 'Air Fryer Garlic Bread',
+    description: 'Crispy, buttery garlic bread in minutes. Perfect side for pasta.',
+    supermarket: Supermarket.ALDI,
+    sourceUrl: 'https://www.aldi.co.uk/recipes/garlic-bread',
+    imageUrl: 'https://images.unsplash.com/photo-1573140401552-3fab0b24f0e6?w=800',
+    prepTime: 5,
+    cookTime: 5,
+    servings: 4,
+    difficulty: Difficulty.EASY,
+    ingredients: [
+      '1 baguette',
+      '100g butter, softened',
+      '4 cloves garlic, minced',
+      '2 tbsp fresh parsley, chopped',
+      'Pinch of salt',
+      'Optional: grated mozzarella'
+    ],
+    instructions: [
+      'Mix butter, garlic, parsley, and salt',
+      'Slice baguette diagonally',
+      'Spread garlic butter generously',
+      'Optional: sprinkle with mozzarella',
+      'Preheat air fryer to 180°C',
+      'Cook for 4-5 minutes until crispy',
+      'Serve hot'
+    ],
+    tags: ['garlic bread', 'side dish', 'italian', 'quick', 'butter']
+  },
+  {
+    title: 'Air Fryer Empanadas',
+    description: 'Crispy Latin American pastries filled with beef and vegetables.',
+    supermarket: Supermarket.MARKS_AND_SPENCER,
+    sourceUrl: 'https://www.marksandspencer.com/recipes/empanadas',
+    imageUrl: 'https://images.unsplash.com/photo-1601050690597-df0568f70950?w=800',
+    prepTime: 30,
+    cookTime: 12,
+    servings: 8,
+    difficulty: Difficulty.MEDIUM,
+    ingredients: [
+      '300g minced beef',
+      '1 onion, diced',
+      '1 red pepper, diced',
+      '2 cloves garlic',
+      '1 tsp cumin',
+      '1 tsp paprika',
+      '50g olives, chopped',
+      '2 sheets puff pastry',
+      '1 egg, beaten',
+      'Cooking spray'
+    ],
+    instructions: [
+      'Cook beef with onion, pepper, and garlic',
+      'Add spices and olives, let cool',
+      'Cut pastry into circles',
+      'Fill with beef mixture',
+      'Fold and seal edges with fork',
+      'Brush with beaten egg',
+      'Spray with cooking spray',
+      'Preheat air fryer to 180°C',
+      'Cook for 10-12 minutes until golden'
+    ],
+    tags: ['empanadas', 'beef', 'latin', 'pastry', 'handheld']
+  },
+  {
+    title: 'Air Fryer Coconut Shrimp',
+    description: 'Crispy coconut-crusted shrimp with sweet chili dipping sauce.',
+    supermarket: Supermarket.WAITROSE,
+    sourceUrl: 'https://www.waitrose.com/recipes/coconut-shrimp',
+    imageUrl: 'https://images.unsplash.com/photo-1633504581786-316c8002b1b9?w=800',
+    prepTime: 15,
+    cookTime: 8,
+    servings: 3,
+    difficulty: Difficulty.MEDIUM,
+    ingredients: [
+      '400g large prawns, peeled',
+      '100g flour',
+      '2 eggs, beaten',
+      '150g shredded coconut',
+      '100g panko breadcrumbs',
+      'Salt and pepper',
+      'Sweet chili sauce',
+      'Lime wedges'
+    ],
+    instructions: [
+      'Mix coconut and panko breadcrumbs',
+      'Season prawns with salt and pepper',
+      'Coat in flour, then egg, then coconut mixture',
+      'Preheat air fryer to 200°C',
+      'Cook for 6-8 minutes until golden',
+      'Serve with sweet chili sauce',
+      'Garnish with lime wedges'
+    ],
+    tags: ['shrimp', 'coconut', 'seafood', 'appetizer', 'tropical']
+  },
+  {
+    title: 'Air Fryer Hash Browns',
+    description: 'Crispy, golden hash browns perfect for breakfast. Better than fast food.',
+    supermarket: Supermarket.TESCO,
+    sourceUrl: 'https://realfood.tesco.com/recipes/hash-browns',
+    imageUrl: 'https://images.unsplash.com/photo-1618564352724-f1e2b615876a?w=800',
+    prepTime: 10,
+    cookTime: 15,
+    servings: 4,
+    difficulty: Difficulty.EASY,
+    ingredients: [
+      '3 large potatoes, grated',
+      '1 onion, finely chopped',
+      '2 tbsp flour',
+      '1 egg',
+      'Salt and pepper',
+      'Cooking spray'
+    ],
+    instructions: [
+      'Squeeze excess water from grated potatoes',
+      'Mix potatoes, onion, flour, egg, and seasoning',
+      'Form into patties',
+      'Spray both sides with cooking spray',
+      'Preheat air fryer to 200°C',
+      'Cook for 12-15 minutes, flipping halfway',
+      'Serve hot with eggs and bacon'
+    ],
+    tags: ['hash browns', 'breakfast', 'potato', 'crispy', 'easy']
+  },
+  {
+    title: 'Air Fryer Chicken Katsu Curry',
+    description: 'Japanese-style breaded chicken with curry sauce. Restaurant quality at home.',
+    supermarket: Supermarket.MARKS_AND_SPENCER,
+    sourceUrl: 'https://www.marksandspencer.com/recipes/chicken-katsu',
+    imageUrl: 'https://images.unsplash.com/photo-1645112411341-6c4fd023714a?w=800',
+    prepTime: 20,
+    cookTime: 15,
+    servings: 2,
+    difficulty: Difficulty.MEDIUM,
+    ingredients: [
+      '2 chicken breasts',
+      '100g panko breadcrumbs',
+      '50g flour',
+      '2 eggs, beaten',
+      '2 tbsp katsu curry paste',
+      '400ml coconut milk',
+      'Cooked rice',
+      'Spring onions for garnish'
+    ],
+    instructions: [
+      'Pound chicken breasts to even thickness',
+      'Coat in flour, egg, then panko',
+      'Preheat air fryer to 180°C',
+      'Cook chicken for 12-15 minutes',
+      'Make curry sauce with paste and coconut milk',
+      'Slice chicken and serve over rice',
+      'Pour curry sauce over top',
+      'Garnish with spring onions'
+    ],
+    tags: ['chicken', 'japanese', 'katsu', 'curry', 'rice']
+  },
+  {
+    title: 'Air Fryer Brie with Cranberry',
+    description: 'Melted brie topped with cranberry sauce. Perfect party appetizer.',
+    supermarket: Supermarket.WAITROSE,
+    sourceUrl: 'https://www.waitrose.com/recipes/baked-brie',
+    imageUrl: 'https://images.unsplash.com/photo-1452251889946-8ff5ea7592ae?w=800',
+    prepTime: 5,
+    cookTime: 10,
+    servings: 6,
+    difficulty: Difficulty.EASY,
+    ingredients: [
+      '250g wheel of brie',
+      '100g cranberry sauce',
+      '50g walnuts, chopped',
+      'Fresh thyme',
+      'Crackers or baguette slices'
+    ],
+    instructions: [
+      'Score top of brie in crosshatch pattern',
+      'Place brie in air fryer-safe dish',
+      'Preheat air fryer to 160°C',
+      'Cook for 8-10 minutes until melted',
+      'Top with cranberry sauce',
+      'Sprinkle with walnuts and thyme',
+      'Serve immediately with crackers'
+    ],
+    tags: ['brie', 'cheese', 'appetizer', 'party', 'cranberry']
+  },
+  {
+    title: 'Air Fryer Peri Peri Chicken',
+    description: 'Spicy Portuguese-style chicken with peri peri seasoning.',
+    supermarket: Supermarket.ALDI,
+    sourceUrl: 'https://www.aldi.co.uk/recipes/peri-peri-chicken',
+    imageUrl: 'https://images.unsplash.com/photo-1598103442097-8b74394b95c6?w=800',
+    prepTime: 60,
+    cookTime: 25,
+    servings: 4,
+    difficulty: Difficulty.EASY,
+    ingredients: [
+      '8 chicken thighs',
+      '4 tbsp peri peri sauce',
+      '2 tbsp olive oil',
+      '2 cloves garlic, minced',
+      '1 lemon, juiced',
+      '1 tsp paprika',
+      'Salt to taste',
+      'Fresh parsley'
+    ],
+    instructions: [
+      'Mix peri peri sauce, oil, garlic, lemon, paprika',
+      'Coat chicken thoroughly',
+      'Marinate for 1 hour',
+      'Preheat air fryer to 180°C',
+      'Cook for 20-25 minutes, turning once',
+      'Check internal temperature reaches 74°C',
+      'Garnish with fresh parsley'
+    ],
+    tags: ['chicken', 'peri peri', 'spicy', 'portuguese', 'grilled']
+  },
+  {
+    title: 'Air Fryer Crab Cakes',
+    description: 'Delicate crab cakes with a golden crust. Luxury seafood made easy.',
+    supermarket: Supermarket.MARKS_AND_SPENCER,
+    sourceUrl: 'https://www.marksandspencer.com/recipes/crab-cakes',
+    imageUrl: 'https://images.unsplash.com/photo-1626082927389-6cd097cdc6ec?w=800',
+    prepTime: 20,
+    cookTime: 12,
+    servings: 4,
+    difficulty: Difficulty.MEDIUM,
+    ingredients: [
+      '300g crab meat',
+      '100g breadcrumbs',
+      '2 tbsp mayonnaise',
+      '1 egg',
+      '2 spring onions, chopped',
+      '1 tsp Dijon mustard',
+      'Lemon zest',
+      'Tartar sauce',
+      'Cooking spray'
+    ],
+    instructions: [
+      'Mix crab, half the breadcrumbs, mayo, egg, spring onions',
+      'Add mustard and lemon zest',
+      'Form into patties',
+      'Coat with remaining breadcrumbs',
+      'Spray with cooking spray',
+      'Preheat air fryer to 180°C',
+      'Cook for 10-12 minutes until golden',
+      'Serve with tartar sauce and lemon'
+    ],
+    tags: ['crab', 'seafood', 'cakes', 'luxury', 'appetizer']
+  },
+  {
+    title: 'Air Fryer Banana Bread',
+    description: 'Moist banana bread baked in the air fryer. Perfect for using ripe bananas.',
+    supermarket: Supermarket.TESCO,
+    sourceUrl: 'https://realfood.tesco.com/recipes/banana-bread',
+    imageUrl: 'https://images.unsplash.com/photo-1603532648955-039310d9ed75?w=800',
+    prepTime: 15,
+    cookTime: 30,
+    servings: 8,
+    difficulty: Difficulty.EASY,
+    ingredients: [
+      '3 ripe bananas, mashed',
+      '150g sugar',
+      '100g melted butter',
+      '2 eggs',
+      '200g flour',
+      '1 tsp baking soda',
+      '1 tsp vanilla extract',
+      'Pinch of salt',
+      'Optional: chocolate chips'
+    ],
+    instructions: [
+      'Mix mashed bananas, sugar, butter, and eggs',
+      'Add vanilla extract',
+      'Mix in flour, baking soda, and salt',
+      'Optional: fold in chocolate chips',
+      'Pour into greased loaf pan',
+      'Preheat air fryer to 160°C',
+      'Bake for 28-30 minutes until toothpick comes out clean',
+      'Cool before slicing'
+    ],
+    tags: ['banana bread', 'baking', 'dessert', 'sweet', 'breakfast']
+  },
+  {
+    title: 'Air Fryer Chicken Fajitas',
+    description: 'Sizzling chicken fajitas with peppers and onions. Mexican feast made easy.',
+    supermarket: Supermarket.WAITROSE,
+    sourceUrl: 'https://www.waitrose.com/recipes/chicken-fajitas',
+    imageUrl: 'https://images.unsplash.com/photo-1599974579688-8dbdd335c77f?w=800',
+    prepTime: 15,
+    cookTime: 15,
+    servings: 4,
+    difficulty: Difficulty.EASY,
+    ingredients: [
+      '500g chicken breast, sliced',
+      '2 bell peppers, sliced',
+      '1 large onion, sliced',
+      '2 tbsp fajita seasoning',
+      '2 tbsp olive oil',
+      'Flour tortillas',
+      'Sour cream',
+      'Guacamole',
+      'Salsa',
+      'Lime wedges'
+    ],
+    instructions: [
+      'Toss chicken, peppers, onions with seasoning and oil',
+      'Preheat air fryer to 200°C',
+      'Cook for 12-15 minutes, shaking basket halfway',
+      'Warm tortillas',
+      'Fill tortillas with chicken mixture',
+      'Top with sour cream, guacamole, and salsa',
+      'Serve with lime wedges'
+    ],
+    tags: ['chicken', 'fajitas', 'mexican', 'peppers', 'tortillas']
+  },
+  {
+    title: 'Air Fryer Loaded Potato Skins',
+    description: 'Crispy potato skins loaded with cheese, bacon, and sour cream.',
+    supermarket: Supermarket.ALDI,
+    sourceUrl: 'https://www.aldi.co.uk/recipes/potato-skins',
+    imageUrl: 'https://images.unsplash.com/photo-1568158879083-c42860933ed7?w=800',
+    prepTime: 40,
+    cookTime: 20,
+    servings: 4,
+    difficulty: Difficulty.MEDIUM,
+    ingredients: [
+      '4 large baking potatoes',
+      '100g cheddar cheese, grated',
+      '6 rashers bacon, cooked and crumbled',
+      '2 spring onions, chopped',
+      'Sour cream',
+      'Olive oil',
+      'Salt and pepper'
+    ],
+    instructions: [
+      'Microwave potatoes for 5 minutes until soft',
+      'Cut in half and scoop out most of the flesh',
+      'Brush skins with olive oil, season with salt',
+      'Preheat air fryer to 200°C',
+      'Cook skins for 10 minutes until crispy',
+      'Fill with cheese and bacon',
+      'Cook for another 5 minutes until cheese melts',
+      'Top with sour cream and spring onions'
+    ],
+    tags: ['potato', 'skins', 'loaded', 'cheese', 'bacon']
+  },
+  {
+    title: 'Air Fryer Vegetable Samosas',
+    description: 'Crispy Indian samosas filled with spiced potatoes and peas.',
+    supermarket: Supermarket.TESCO,
+    sourceUrl: 'https://realfood.tesco.com/recipes/samosas',
+    imageUrl: 'https://images.unsplash.com/photo-1601050690597-df0568f70950?w=800',
+    prepTime: 30,
+    cookTime: 12,
+    servings: 8,
+    difficulty: Difficulty.MEDIUM,
+    ingredients: [
+      '2 large potatoes, boiled and diced',
+      '100g frozen peas',
+      '1 onion, finely chopped',
+      '2 tsp curry powder',
+      '1 tsp cumin seeds',
+      '1 tsp garam masala',
+      '12 spring roll wrappers',
+      'Cooking spray',
+      'Mango chutney'
+    ],
+    instructions: [
+      'Cook onion with spices until fragrant',
+      'Mix in potatoes and peas',
+      'Let filling cool completely',
+      'Place filling in spring roll wrappers',
+      'Fold into triangle shapes',
+      'Spray with cooking spray',
+      'Preheat air fryer to 180°C',
+      'Cook for 10-12 minutes until golden',
+      'Serve with mango chutney'
+    ],
+    tags: ['samosas', 'indian', 'vegetarian', 'spicy', 'pastry']
+  },
+  {
+    title: 'Air Fryer Peach Cobbler',
+    description: 'Warm peach cobbler with a buttery topping. Summer dessert perfection.',
+    supermarket: Supermarket.MARKS_AND_SPENCER,
+    sourceUrl: 'https://www.marksandspencer.com/recipes/peach-cobbler',
+    imageUrl: 'https://images.unsplash.com/photo-1563729784474-d77dbb933a9e?w=800',
+    prepTime: 15,
+    cookTime: 20,
+    servings: 4,
+    difficulty: Difficulty.EASY,
+    ingredients: [
+      '4 peaches, sliced',
+      '50g sugar',
+      '1 tsp cinnamon',
+      '100g flour',
+      '50g butter',
+      '50g brown sugar',
+      '50g oats',
+      'Vanilla ice cream to serve'
+    ],
+    instructions: [
+      'Toss peaches with sugar and cinnamon',
+      'Place in air fryer-safe dish',
+      'Mix flour, butter, brown sugar, and oats',
+      'Sprinkle topping over peaches',
+      'Preheat air fryer to 160°C',
+      'Cook for 18-20 minutes until bubbling',
+      'Serve warm with vanilla ice cream'
+    ],
+    tags: ['peach', 'cobbler', 'dessert', 'sweet', 'summer']
   }
 ];
 
