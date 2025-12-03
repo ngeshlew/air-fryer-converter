@@ -68,8 +68,41 @@ export class WaitroseScraper extends BaseScraper {
         const title = getText('h1') || getText('[class*="RecipeTitle"]');
         const description = getText('[class*="description"]') || getText('[class*="intro"]');
         
-        const imageElement = document.querySelector('img[src*="recipe"]') || document.querySelector('main img');
-        const imageUrl = imageElement ? (imageElement as HTMLImageElement).src : null;
+        // Get image - try multiple selectors for Waitrose recipe pages
+        const imageSelectors = [
+          'img[src*="recipe"]',
+          'img[alt*="recipe"]',
+          '[class*="hero"] img',
+          '[class*="Hero"] img',
+          '[class*="recipe-image"] img',
+          '[class*="RecipeImage"] img',
+          'picture img',
+          'article img[src*="."]',
+          'main img[src*="."]',
+          'main img'
+        ];
+        
+        let imageUrl: string | null = null;
+        for (const selector of imageSelectors) {
+          const img = document.querySelector(selector) as HTMLImageElement;
+          if (img && img.src) {
+            if (!img.src.startsWith('data:') && img.naturalWidth > 200) {
+              imageUrl = img.src;
+              break;
+            }
+          }
+        }
+        
+        // Ensure full URL if relative
+        if (imageUrl && imageUrl.startsWith('/')) {
+          imageUrl = `https://www.waitrose.com${imageUrl}`;
+        }
+        
+        // Remove query parameters
+        if (imageUrl && imageUrl.includes('?')) {
+          const urlParts = imageUrl.split('?');
+          imageUrl = urlParts[0];
+        }
 
         const prepTimeText = getText('[class*="prep"]') || getText('[aria-label*="prep"]');
         const cookTimeText = getText('[class*="cook"]') || getText('[aria-label*="cook"]');

@@ -82,18 +82,41 @@ export class MarksAndSpencerScraper extends BaseScraper {
                           getText('[class*="intro"]') ||
                           getText('p');
 
-        // Get image - M&S recipe pages
-        const imageElement = document.querySelector('img[src*="recipe"]') || 
-                           document.querySelector('img[alt*="recipe"]') ||
-                           document.querySelector('article img') ||
-                           document.querySelector('[class*="hero"] img') ||
-                           document.querySelector('main img[src*="."]') ||
-                           document.querySelector('main img');
-        let imageUrl = imageElement ? (imageElement as HTMLImageElement).src : null;
+        // Get image - try multiple selectors for M&S recipe pages
+        const imageSelectors = [
+          'img[src*="recipe"]',
+          'img[alt*="recipe"]',
+          '[class*="hero"] img',
+          '[class*="Hero"] img',
+          '[class*="recipe-image"] img',
+          '[class*="RecipeImage"] img',
+          '[class*="product-image"] img',
+          'picture img',
+          'article img[src*="."]',
+          'main img[src*="."]',
+          'main img'
+        ];
+        
+        let imageUrl: string | null = null;
+        for (const selector of imageSelectors) {
+          const img = document.querySelector(selector) as HTMLImageElement;
+          if (img && img.src) {
+            if (!img.src.startsWith('data:') && img.naturalWidth > 200) {
+              imageUrl = img.src;
+              break;
+            }
+          }
+        }
         
         // Ensure full URL if relative
         if (imageUrl && imageUrl.startsWith('/')) {
           imageUrl = `https://www.marksandspencer.com${imageUrl}`;
+        }
+        
+        // Remove query parameters
+        if (imageUrl && imageUrl.includes('?')) {
+          const urlParts = imageUrl.split('?');
+          imageUrl = urlParts[0];
         }
 
         // Get prep time
