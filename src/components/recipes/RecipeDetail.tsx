@@ -11,6 +11,7 @@ import { Separator } from '@/components/ui/separator';
 import { useRecipeStore } from '@/store/useRecipeStore';
 import { Skeleton } from '@/components/ui/skeleton';
 import { ArrowLeft, Clock, TrendingUp, Users, Thermometer, Timer } from 'lucide-react';
+import { extractTemperatureFromInstructions, calculateAirFryerTemperature, calculateAirFryerTime } from '@/utils/recipeUtils';
 
 export const RecipeDetail: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -162,13 +163,18 @@ export const RecipeDetail: React.FC = () => {
 
             {/* Air Fryer Settings */}
             {currentRecipe.cookTime && (() => {
-              // Calculate air fryer temperature (typically 20°C lower than standard oven temp of 180°C)
+              // Try to extract temperature from instructions first
+              const extractedTemp = currentRecipe.instructions && Array.isArray(currentRecipe.instructions)
+                ? extractTemperatureFromInstructions(currentRecipe.instructions)
+                : null;
+              
+              // Use extracted temperature if found, otherwise calculate from standard oven temp
               const standardOvenTemp = 180;
-              const airFryerTemp = Math.max(standardOvenTemp - 20, 140);
-              const tempReduction = standardOvenTemp - airFryerTemp;
+              const airFryerTemp = extractedTemp || calculateAirFryerTemperature(standardOvenTemp);
+              const tempReduction = extractedTemp ? 0 : (standardOvenTemp - airFryerTemp);
               
               // Calculate air fryer time (20% reduction)
-              const airFryerTime = Math.round(currentRecipe.cookTime * 0.8);
+              const airFryerTime = calculateAirFryerTime(currentRecipe.cookTime);
               const timeReduction = Math.round(((currentRecipe.cookTime - airFryerTime) / currentRecipe.cookTime) * 100);
               
               return (
@@ -183,9 +189,15 @@ export const RecipeDetail: React.FC = () => {
                       <p className="text-2xl font-mono font-normal text-[hsl(0,84%,60%)]">
                         {airFryerTemp}°C
                       </p>
-                      <p className="text-xs text-muted-foreground">
-                        ({tempReduction}°C lower than oven)
-                      </p>
+                      {extractedTemp ? (
+                        <p className="text-xs text-muted-foreground">
+                          (from recipe instructions)
+                        </p>
+                      ) : (
+                        <p className="text-xs text-muted-foreground">
+                          ({tempReduction}°C lower than oven)
+                        </p>
+                      )}
                     </div>
                     
                     {/* Column 2: Cooking Time */}
