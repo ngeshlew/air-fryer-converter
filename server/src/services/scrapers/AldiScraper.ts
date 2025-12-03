@@ -15,8 +15,8 @@ export class AldiScraper extends BaseScraper {
     const recipeUrls: string[] = [];
 
     try {
-      // Navigate to ALDI recipes page
-      const recipesUrl = `${this.baseUrl}/recipes`;
+      // Navigate to ALDI Air Fryer recipes collection page
+      const recipesUrl = `${this.baseUrl}/recipes/collections/air-fryer`;
       await this.navigateWithRetry(recipesUrl);
 
       // Wait for recipe cards to load
@@ -73,9 +73,18 @@ export class AldiScraper extends BaseScraper {
         // Get description
         const description = getText('[class*="description"]') || getText('[class*="Description"]') || getText('p');
 
-        // Get image
-        const imageElement = document.querySelector('img[src*="recipe"]') || document.querySelector('img[alt*="recipe"]') || document.querySelector('main img');
-        const imageUrl = imageElement ? (imageElement as HTMLImageElement).src : null;
+        // Get image - try multiple selectors for ALDI recipe pages
+        const imageElement = document.querySelector('img[src*="recipe"]') || 
+                           document.querySelector('img[alt*="recipe"]') || 
+                           document.querySelector('article img') ||
+                           document.querySelector('main img[src*="."]') ||
+                           document.querySelector('main img');
+        let imageUrl = imageElement ? (imageElement as HTMLImageElement).src : null;
+        
+        // Ensure full URL if relative
+        if (imageUrl && imageUrl.startsWith('/')) {
+          imageUrl = `https://www.aldi.co.uk${imageUrl}`;
+        }
 
         // Get prep time
         const prepTimeText = getText('[class*="prep"]') || getText('[class*="Prep"]');
@@ -89,15 +98,28 @@ export class AldiScraper extends BaseScraper {
         // Get difficulty
         const difficultyText = getText('[class*="difficulty"]') || getText('[class*="Difficulty"]');
 
-        // Get ingredients
-        const ingredients = getAllText('[class*="ingredient"] li') || 
+        // Get ingredients - ALDI uses "Ingredients" section
+        const ingredients = getAllText('h2:contains("Ingredients") + ul li') ||
+                          getAllText('h3:contains("Ingredients") + ul li') ||
+                          getAllText('[class*="ingredient"] li') || 
                           getAllText('[class*="Ingredient"] li') ||
+                          Array.from(document.querySelectorAll('h2, h3')).find(el => 
+                            el.textContent?.toLowerCase().includes('ingredient')
+                          )?.nextElementSibling?.querySelectorAll('li') ? 
+                          Array.from(Array.from(document.querySelectorAll('h2, h3')).find(el => 
+                            el.textContent?.toLowerCase().includes('ingredient')
+                          )?.nextElementSibling?.querySelectorAll('li') || []).map(li => li.textContent?.trim()).filter(Boolean) as string[] :
                           getAllText('ul li').filter(text => 
-                            text.match(/\d+/) && (text.includes('g') || text.includes('ml') || text.includes('tbsp') || text.includes('tsp'))
+                            text.match(/\d+/) && (text.includes('g') || text.includes('ml') || text.includes('tbsp') || text.includes('tsp') || text.includes('Banana'))
                           );
 
-        // Get instructions
-        const instructions = getAllText('[class*="instruction"] li') || 
+        // Get instructions - ALDI uses "Method" section  
+        const methodHeader = Array.from(document.querySelectorAll('h2, h3')).find(el => 
+          el.textContent?.toLowerCase().includes('method')
+        );
+        const instructions = methodHeader?.nextElementSibling?.querySelectorAll('ol li, li') ?
+                          Array.from(methodHeader.nextElementSibling.querySelectorAll('ol li, li')).map(li => li.textContent?.trim()).filter(Boolean) as string[] :
+                          getAllText('[class*="instruction"] li') || 
                            getAllText('[class*="Instruction"] li') ||
                            getAllText('[class*="method"] li') ||
                            getAllText('[class*="Method"] li') ||

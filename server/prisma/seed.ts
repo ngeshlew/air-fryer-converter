@@ -300,6 +300,33 @@ const sampleRecipes = [
     tags: ['brownies', 'chocolate', 'dessert', 'baking', 'sweet']
   },
   {
+    title: 'Air Fryer Banana Chips',
+    description: 'Crispy, healthy banana chips made in the air fryer. Perfect snack with just 4 ingredients.',
+    supermarket: Supermarket.ALDI,
+    sourceUrl: 'https://www.aldi.co.uk/recipes/collections/air-fryer/air-fryer-banana-chips',
+    imageUrl: 'https://images.unsplash.com/photo-1627895451616-4a8c100eb0d8?w=800',
+    prepTime: 5,
+    cookTime: 20,
+    servings: 2,
+    difficulty: Difficulty.EASY,
+    ingredients: [
+      '2 Bananas',
+      '1 tbsp Olive oil',
+      '1 tsp Paprika',
+      '½ tsp Salt'
+    ],
+    instructions: [
+      'Pre-heat air fryer to 170°C',
+      'Slice the bananas thinly into 2-3mm slices',
+      'Place the banana slices into a bowl with the olive oil, salt and paprika and mix to coat',
+      'Place slices in an even layer in the air fryer (you may have to cook them in batches)',
+      'Cook for 5-10 minutes then flip and cook for another 5-10 minutes',
+      'The banana chips are done when they are crispy so keep checking them and flipping until a crisp texture is achieved',
+      'Serve immediately'
+    ],
+    tags: ['banana', 'chips', 'vegan', 'gluten free', 'snack', 'healthy']
+  },
+  {
     title: 'Air Fryer Roasted Vegetables',
     description: 'Perfectly roasted mixed vegetables with herbs. Healthy and delicious side dish.',
     supermarket: Supermarket.TESCO,
