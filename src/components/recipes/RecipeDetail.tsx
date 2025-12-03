@@ -178,7 +178,7 @@ export const RecipeDetail: React.FC = () => {
               const timeReduction = Math.round(((currentRecipe.cookTime - airFryerTime) / currentRecipe.cookTime) * 100);
               
               return (
-                <div className="bg-accent p-6 rounded-lg space-y-4">
+                <div className="bg-accent rounded-lg space-y-4">
                   <h2 className="text-sm font-medium uppercase tracking-wide text-[hsl(0,84%,60%)]">
                     Air Fryer Settings
                   </h2>
