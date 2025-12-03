@@ -16,37 +16,38 @@ export const ConversionResultDisplay: React.FC<ConversionResultDisplayProps> = (
         Air Fryer Settings
       </h3>
 
-      {/* Temperature Result */}
-      <div className="flex items-start gap-3">
-        <div className="mt-1">
-          <Thermometer className="h-5 w-5 text-[hsl(0,84%,60%)]" />
+      {/* Temperature and Time Results - Side by Side */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        {/* Column 1: Temperature Result */}
+        <div className="flex items-start gap-3">
+          <div className="mt-1">
+            <Thermometer className="h-5 w-5 text-[hsl(0,84%,60%)]" />
+          </div>
+          <div className="flex-1">
+            <p className="text-sm text-muted-foreground">Temperature</p>
+            <p className="text-2xl font-mono font-normal text-[hsl(0,84%,60%)]">
+              {result.airFryerTemp}°C
+            </p>
+            <p className="text-xs text-muted-foreground mt-1">
+              ({result.tempReduction}°C lower than oven)
+            </p>
+          </div>
         </div>
-        <div className="flex-1">
-          <p className="text-sm text-muted-foreground">Temperature</p>
-          <p className="text-2xl font-mono font-normal text-[hsl(0,84%,60%)]">
-            {result.airFryerTemp}°C
-          </p>
-          <p className="text-xs text-muted-foreground mt-1">
-            ({result.tempReduction}°C lower than oven)
-          </p>
-        </div>
-      </div>
 
-      <Separator />
-
-      {/* Time Result */}
-      <div className="flex items-start gap-3">
-        <div className="mt-1">
-          <Timer className="h-5 w-5 text-[hsl(0,84%,60%)]" />
-        </div>
-        <div className="flex-1">
-          <p className="text-sm text-muted-foreground">Cooking Time</p>
-          <p className="text-2xl font-mono font-normal text-[hsl(0,84%,60%)]">
-            {result.airFryerTime} minutes
-          </p>
-          <p className="text-xs text-muted-foreground mt-1">
-            ({result.timeReduction}% shorter than oven)
-          </p>
+        {/* Column 2: Time Result */}
+        <div className="flex items-start gap-3">
+          <div className="mt-1">
+            <Timer className="h-5 w-5 text-[hsl(0,84%,60%)]" />
+          </div>
+          <div className="flex-1">
+            <p className="text-sm text-muted-foreground">Cooking Time</p>
+            <p className="text-2xl font-mono font-normal text-[hsl(0,84%,60%)]">
+              {result.airFryerTime} minutes
+            </p>
+            <p className="text-xs text-muted-foreground mt-1">
+              ({result.timeReduction}% shorter than oven)
+            </p>
+          </div>
         </div>
       </div>
 
