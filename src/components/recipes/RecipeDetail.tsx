@@ -83,7 +83,7 @@ export const RecipeDetail: React.FC = () => {
         <main className="flex-1 p-4 lg:p-8 pb-20 lg:pb-8">
           <div className="mx-auto max-w-4xl space-y-6">
             {/* Back Button */}
-            <Button variant="ghost" onClick={() => navigate('/recipes')}>
+            <Button variant="outline" onClick={() => navigate('/recipes')}>
               <ArrowLeft className="h-4 w-4 mr-2" />
               Back to Recipes
             </Button>
