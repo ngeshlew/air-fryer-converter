@@ -189,10 +189,15 @@
   }
   html, body {
     overflow-x: hidden;
+    font-family: "IBM Plex Mono", "IBM Plex Mono Fallback", SF Mono, Monaco, Inconsolata, "Roboto Mono", "Oxygen Mono", "Ubuntu Monospace", "Source Code Pro", "Fira Mono", "Droid Sans Mono", "Courier New", monospace;
   }
   
   body {
     @apply bg-background text-foreground;
+  }
+  
+  * {
+    font-family: inherit;
   }
 }
 

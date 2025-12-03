@@ -18,6 +18,21 @@ module.exports = {
   	},
   	extend: {
 		fontFamily: {
+			sans: [
+				'IBM Plex Mono',
+				'IBM Plex Mono Fallback',
+				'SF Mono',
+				'Monaco',
+				'Inconsolata',
+				'Roboto Mono',
+				'Oxygen Mono',
+				'Ubuntu Monospace',
+				'Source Code Pro',
+				'Fira Mono',
+				'Droid Sans Mono',
+				'Courier New',
+				'monospace'
+			],
 			mono: [
 				'IBM Plex Mono',
 				'IBM Plex Mono Fallback',
