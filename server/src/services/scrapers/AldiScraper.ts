@@ -22,12 +22,30 @@ export class AldiScraper extends BaseScraper {
       // Wait for recipe cards to load
       await this.page.waitForSelector('a[href*="/recipes/"]', { timeout: 10000 });
 
-      // Extract recipe URLs
+      // Extract recipe URLs - only get actual recipe pages, not collection pages
       const urls = await this.page.evaluate(() => {
         const links = Array.from(document.querySelectorAll('a[href*="/recipes/"]'));
         return links
           .map(link => (link as HTMLAnchorElement).href)
-          .filter(href => href && !href.endsWith('/recipes') && !href.endsWith('/recipes/'));
+          .filter(href => {
+            if (!href) return false;
+            const url = href.toLowerCase();
+            // Exclude collection/category pages
+            const excludePatterns = [
+              '/recipes/collections/',
+              '/recipes/scottish',
+              '/recipes/christmas',
+              '/recipes/courses',
+              '/recipes/',
+            ];
+            // Only include URLs that look like individual recipes
+            // They should have more path segments after /recipes/
+            const pathParts = new URL(url).pathname.split('/').filter(p => p);
+            const isRecipePage = pathParts.length >= 3 && 
+                                 pathParts[0] === 'recipes' && 
+                                 !excludePatterns.some(pattern => url.includes(pattern));
+            return isRecipePage;
+          });
       });
 
       // Remove duplicates and limit
@@ -99,16 +117,13 @@ export class AldiScraper extends BaseScraper {
         const difficultyText = getText('[class*="difficulty"]') || getText('[class*="Difficulty"]');
 
         // Get ingredients - ALDI uses "Ingredients" section
-        const ingredients = getAllText('h2:contains("Ingredients") + ul li') ||
-                          getAllText('h3:contains("Ingredients") + ul li') ||
+        const ingredientsHeader = Array.from(document.querySelectorAll('h2, h3')).find(el => 
+          el.textContent?.toLowerCase().includes('ingredient')
+        );
+        const ingredients = ingredientsHeader?.nextElementSibling?.querySelectorAll('li') ?
+                          Array.from(ingredientsHeader.nextElementSibling.querySelectorAll('li')).map(li => li.textContent?.trim()).filter(Boolean) as string[] :
                           getAllText('[class*="ingredient"] li') || 
                           getAllText('[class*="Ingredient"] li') ||
-                          Array.from(document.querySelectorAll('h2, h3')).find(el => 
-                            el.textContent?.toLowerCase().includes('ingredient')
-                          )?.nextElementSibling?.querySelectorAll('li') ? 
-                          Array.from(Array.from(document.querySelectorAll('h2, h3')).find(el => 
-                            el.textContent?.toLowerCase().includes('ingredient')
-                          )?.nextElementSibling?.querySelectorAll('li') || []).map(li => li.textContent?.trim()).filter(Boolean) as string[] :
                           getAllText('ul li').filter(text => 
                             text.match(/\d+/) && (text.includes('g') || text.includes('ml') || text.includes('tbsp') || text.includes('tsp') || text.includes('Banana'))
                           );
