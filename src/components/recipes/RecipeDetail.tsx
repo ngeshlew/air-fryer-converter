@@ -161,24 +161,47 @@ export const RecipeDetail: React.FC = () => {
             <Separator />
 
             {/* Air Fryer Settings */}
-            {currentRecipe.cookTime && (
-              <div className="bg-accent p-6 rounded-lg space-y-3">
-                <h2 className="text-lg font-normal uppercase tracking-wide flex items-center gap-2">
-                  <Thermometer className="h-5 w-5" />
-                  Air Fryer Settings
-                </h2>
-                <div className="grid grid-cols-2 gap-4 text-sm">
-                  <div>
-                    <p className="text-muted-foreground">Temperature</p>
-                    <p className="text-2xl font-mono font-normal">180°C</p>
-                  </div>
-                  <div>
-                    <p className="text-muted-foreground">Time</p>
-                    <p className="text-2xl font-mono font-normal">{currentRecipe.cookTime} mins</p>
+            {currentRecipe.cookTime && (() => {
+              // Calculate air fryer temperature (typically 20°C lower than standard oven temp of 180°C)
+              const standardOvenTemp = 180;
+              const airFryerTemp = Math.max(standardOvenTemp - 20, 140);
+              const tempReduction = standardOvenTemp - airFryerTemp;
+              
+              // Calculate air fryer time (20% reduction)
+              const airFryerTime = Math.round(currentRecipe.cookTime * 0.8);
+              const timeReduction = Math.round(((currentRecipe.cookTime - airFryerTime) / currentRecipe.cookTime) * 100);
+              
+              return (
+                <div className="bg-accent p-6 rounded-lg space-y-4">
+                  <h2 className="text-sm font-medium uppercase tracking-wide text-[hsl(0,84%,60%)]">
+                    Air Fryer Settings
+                  </h2>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    {/* Column 1: Temperature */}
+                    <div className="space-y-1">
+                      <p className="text-sm text-muted-foreground">Temperature</p>
+                      <p className="text-2xl font-mono font-normal text-[hsl(0,84%,60%)]">
+                        {airFryerTemp}°C
+                      </p>
+                      <p className="text-xs text-muted-foreground">
+                        ({tempReduction}°C lower than oven)
+                      </p>
+                    </div>
+                    
+                    {/* Column 2: Cooking Time */}
+                    <div className="space-y-1">
+                      <p className="text-sm text-muted-foreground">Cooking Time</p>
+                      <p className="text-2xl font-mono font-normal text-[hsl(0,84%,60%)]">
+                        {airFryerTime} minutes
+                      </p>
+                      <p className="text-xs text-muted-foreground">
+                        ({timeReduction}% shorter than oven)
+                      </p>
+                    </div>
                   </div>
                 </div>
-              </div>
-            )}
+              );
+            })()}
 
             {/* Ingredients and Instructions */}
             <div className="grid lg:grid-cols-2 gap-8">
