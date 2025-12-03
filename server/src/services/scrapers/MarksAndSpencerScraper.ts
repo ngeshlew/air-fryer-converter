@@ -70,7 +70,7 @@ export class MarksAndSpencerScraper extends BaseScraper {
           const elements = Array.from(document.querySelectorAll(selector));
           return elements
             .map(el => el.textContent?.trim())
-            .filter((text): text is string => Boolean(text));
+            .filter(text => text !== null && text !== undefined && text !== '') as string[];
         };
 
         // Get title
