@@ -4,6 +4,8 @@ import { logger } from '../utils/logger.js';
 import { AldiScraper } from './scrapers/AldiScraper.js';
 import { WaitroseScraper } from './scrapers/WaitroseScraper.js';
 import { TescoScraper } from './scrapers/TescoScraper.js';
+import { MarksAndSpencerScraper } from './scrapers/MarksAndSpencerScraper.js';
+import { BBCGoodFoodScraper } from './scrapers/BBCGoodFoodScraper.js';
 import { BaseScraper, ScrapedRecipe } from './scrapers/BaseScraper.js';
 
 export class ScrapingService {
@@ -16,6 +18,8 @@ export class ScrapingService {
       [Supermarket.ALDI, new AldiScraper()],
       [Supermarket.WAITROSE, new WaitroseScraper()],
       [Supermarket.TESCO, new TescoScraper()],
+      [Supermarket.MARKS_AND_SPENCER, new MarksAndSpencerScraper()],
+      [Supermarket.BBC_GOOD_FOOD, new BBCGoodFoodScraper()],
     ]);
   }
 

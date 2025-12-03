@@ -15,8 +15,8 @@ export class TescoScraper extends BaseScraper {
     const recipeUrls: string[] = [];
 
     try {
-      // Navigate to Tesco Real Food recipes page
-      const recipesUrl = `${this.baseUrl}/recipes`;
+      // Navigate to Tesco Real Food Air Fryer category page
+      const recipesUrl = `${this.baseUrl}/category/air-fryer.html`;
       await this.navigateWithRetry(recipesUrl);
 
       // Wait for recipe cards to load

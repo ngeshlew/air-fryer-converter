@@ -15,8 +15,8 @@ export class WaitroseScraper extends BaseScraper {
     const recipeUrls: string[] = [];
 
     try {
-      // Navigate to Waitrose recipes page
-      const recipesUrl = `${this.baseUrl}/ecom/recipes`;
+      // Navigate to Waitrose Air Fryer recipes page
+      const recipesUrl = `${this.baseUrl}/ecom/recipes/air-fryer`;
       await this.navigateWithRetry(recipesUrl);
 
       // Wait for recipe cards to load
