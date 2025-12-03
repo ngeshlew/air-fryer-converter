@@ -23,7 +23,7 @@ export const Dashboard: React.FC = () => {
 
         {/* Page Content */}
         <main className="flex-1 p-4 lg:p-8 pb-20 lg:pb-8">
-          <div className="mx-auto max-w-4xl space-y-8">
+          <div className="mx-auto max-w-2xl space-y-8">
             {/* Calculator Section */}
             <section>
               <CalculatorForm />
