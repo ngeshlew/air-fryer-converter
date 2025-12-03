@@ -58,11 +58,14 @@ export const RecipeBrowser: React.FC = () => {
             {/* Search and Filters */}
             <div className="space-y-4">
               <RecipeSearch onSearch={handleSearch} />
-              <RecipeFilters
-                selectedSupermarket={filters.supermarket}
-                onSupermarketChange={handleSupermarketFilter}
-                onClearFilters={handleClearFilters}
-              />
+              <div className="flex items-center gap-3">
+                <span className="text-sm text-muted-foreground whitespace-nowrap">Filter by:</span>
+                <RecipeFilters
+                  selectedSupermarket={filters.supermarket}
+                  onSupermarketChange={handleSupermarketFilter}
+                  onClearFilters={handleClearFilters}
+                />
+              </div>
             </div>
 
             {/* Error State */}
