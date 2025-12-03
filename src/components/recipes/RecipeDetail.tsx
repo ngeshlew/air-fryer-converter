@@ -10,7 +10,7 @@ import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
 import { useRecipeStore } from '@/store/useRecipeStore';
 import { Skeleton } from '@/components/ui/skeleton';
-import { ArrowLeft, Clock, TrendingUp, Users, ExternalLink, Thermometer, Timer } from 'lucide-react';
+import { ArrowLeft, Clock, TrendingUp, Users, Thermometer, Timer } from 'lucide-react';
 
 export const RecipeDetail: React.FC = () => {
   const { id } = useParams<{ id: string }>();
