@@ -36,7 +36,7 @@ export const RecipeCard: React.FC<RecipeCardProps> = ({ recipe }) => {
 
       <CardContent className="p-4 space-y-3">
         {/* Recipe Title */}
-        <h3 className="font-semibold line-clamp-2 min-h-[2.5rem]">
+        <h3 className="font-normal line-clamp-2 min-h-[2.5rem]">
           {recipe.title}
         </h3>
 

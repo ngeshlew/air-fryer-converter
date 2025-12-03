@@ -24,7 +24,7 @@ export const SettingsLayout: React.FC = () => {
         <main className="flex-1 p-4 lg:p-8 pb-20 lg:pb-8">
           <div className="mx-auto max-w-2xl space-y-6">
             <div>
-              <h1 className="text-3xl font-bold uppercase tracking-wide mb-2">
+              <h1 className="text-3xl font-normal uppercase tracking-wide mb-2">
                 Settings
               </h1>
               <p className="text-muted-foreground">

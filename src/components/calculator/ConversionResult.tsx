@@ -23,7 +23,7 @@ export const ConversionResultDisplay: React.FC<ConversionResultDisplayProps> = (
         </div>
         <div className="flex-1">
           <p className="text-sm text-muted-foreground">Temperature</p>
-          <p className="text-2xl font-mono font-semibold text-[hsl(0,84%,60%)]">
+          <p className="text-2xl font-mono font-normal text-[hsl(0,84%,60%)]">
             {result.airFryerTemp}°C
           </p>
           <p className="text-xs text-muted-foreground mt-1">
@@ -41,7 +41,7 @@ export const ConversionResultDisplay: React.FC<ConversionResultDisplayProps> = (
         </div>
         <div className="flex-1">
           <p className="text-sm text-muted-foreground">Cooking Time</p>
-          <p className="text-2xl font-mono font-semibold text-[hsl(0,84%,60%)]">
+          <p className="text-2xl font-mono font-normal text-[hsl(0,84%,60%)]">
             {result.airFryerTime} minutes
           </p>
           <p className="text-xs text-muted-foreground mt-1">
@@ -60,7 +60,7 @@ export const ConversionResultDisplay: React.FC<ConversionResultDisplayProps> = (
         <div className="flex-1">
           <p className="text-sm font-medium text-[hsl(0,84%,60%)]">Pro Tip</p>
           <p className="text-sm text-muted-foreground mt-1">
-            Start checking your food at <span className="font-mono font-semibold text-[hsl(0,84%,60%)]">{result.checkTime} minutes</span> to prevent overcooking
+            Start checking your food at <span className="font-mono font-normal text-[hsl(0,84%,60%)]">{result.checkTime} minutes</span> to prevent overcooking
           </p>
         </div>
       </div>

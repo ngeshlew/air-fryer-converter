@@ -74,7 +74,7 @@ export const RecipeOfTheDay: React.FC = () => {
 
         {/* Recipe Title */}
         <div>
-          <h3 className="text-xl font-semibold mb-2">{featuredRecipe.title}</h3>
+          <h3 className="text-xl font-normal mb-2">{featuredRecipe.title}</h3>
           
           {/* Recipe Meta */}
           <div className="flex flex-wrap items-center gap-2 text-sm text-muted-foreground">

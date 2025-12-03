@@ -55,7 +55,7 @@ export const RecipeDetail: React.FC = () => {
           <main className="flex-1 p-4 lg:p-8">
             <div className="mx-auto max-w-4xl">
               <div className="p-8 text-center">
-                <h2 className="text-2xl font-bold mb-2">Recipe not found</h2>
+                <h2 className="text-2xl font-normal mb-2">Recipe not found</h2>
                 <p className="text-muted-foreground mb-4">{error || 'This recipe could not be loaded'}</p>
                 <Button onClick={() => navigate('/recipes')}>
                   <ArrowLeft className="h-4 w-4 mr-2" />
@@ -100,7 +100,7 @@ export const RecipeDetail: React.FC = () => {
             {/* Recipe Header */}
             <div className="space-y-4">
               <div className="flex items-start justify-between gap-4">
-                <h1 className="text-3xl font-bold">{currentRecipe.title}</h1>
+                <h1 className="text-3xl font-normal">{currentRecipe.title}</h1>
                 <Button
                   variant="outline"
                   size="sm"
@@ -164,18 +164,18 @@ export const RecipeDetail: React.FC = () => {
             {/* Air Fryer Settings */}
             {currentRecipe.cookTime && (
               <div className="bg-accent p-6 rounded-lg space-y-3">
-                <h2 className="text-lg font-semibold uppercase tracking-wide flex items-center gap-2">
+                <h2 className="text-lg font-normal uppercase tracking-wide flex items-center gap-2">
                   <Thermometer className="h-5 w-5" />
                   Air Fryer Settings
                 </h2>
                 <div className="grid grid-cols-2 gap-4 text-sm">
                   <div>
                     <p className="text-muted-foreground">Temperature</p>
-                    <p className="text-2xl font-mono font-semibold">180°C</p>
+                    <p className="text-2xl font-mono font-normal">180°C</p>
                   </div>
                   <div>
                     <p className="text-muted-foreground">Time</p>
-                    <p className="text-2xl font-mono font-semibold">{currentRecipe.cookTime} mins</p>
+                    <p className="text-2xl font-mono font-normal">{currentRecipe.cookTime} mins</p>
                   </div>
                 </div>
               </div>
@@ -186,7 +186,7 @@ export const RecipeDetail: React.FC = () => {
               {/* Ingredients */}
               {currentRecipe.ingredients && Array.isArray(currentRecipe.ingredients) && currentRecipe.ingredients.length > 0 && (
                 <div>
-                  <h2 className="text-xl font-semibold uppercase tracking-wide mb-4">
+                  <h2 className="text-xl font-normal uppercase tracking-wide mb-4">
                     Ingredients
                   </h2>
                   <ul className="space-y-2">
@@ -203,13 +203,13 @@ export const RecipeDetail: React.FC = () => {
               {/* Instructions */}
               {currentRecipe.instructions && Array.isArray(currentRecipe.instructions) && currentRecipe.instructions.length > 0 && (
                 <div>
-                  <h2 className="text-xl font-semibold uppercase tracking-wide mb-4">
+                  <h2 className="text-xl font-normal uppercase tracking-wide mb-4">
                     Instructions
                   </h2>
                   <ol className="space-y-3">
                     {currentRecipe.instructions.map((step, index) => (
                       <li key={index} className="flex gap-3">
-                        <span className="flex-shrink-0 flex items-center justify-center w-6 h-6 rounded-full bg-primary text-primary-foreground text-sm font-semibold">
+                        <span className="flex-shrink-0 flex items-center justify-center w-6 h-6 rounded-full bg-primary text-primary-foreground text-sm font-normal">
                           {index + 1}
                         </span>
                         <span className="text-muted-foreground pt-0.5">{step}</span>

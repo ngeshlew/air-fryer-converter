@@ -46,7 +46,7 @@ export const RecipeBrowser: React.FC = () => {
           <div className="mx-auto max-w-7xl space-y-6">
             {/* Page Header */}
             <div>
-              <h1 className="text-3xl font-bold uppercase tracking-wide mb-2">
+              <h1 className="text-3xl font-normal uppercase tracking-wide mb-2">
                 Air Fryer Recipes
               </h1>
               <p className="text-muted-foreground">
@@ -88,7 +88,7 @@ export const RecipeBrowser: React.FC = () => {
             {!isLoading && recipes.length === 0 && (
               <div className="flex flex-col items-center justify-center py-16 text-center">
                 <ChefHat className="h-16 w-16 mb-4 text-muted-foreground/50" />
-                <h3 className="text-xl font-semibold mb-2">No recipes found</h3>
+                <h3 className="text-xl font-normal mb-2">No recipes found</h3>
                 <p className="text-muted-foreground mb-4">
                   {filters.search || filters.supermarket
                     ? 'Try adjusting your filters or search query'
