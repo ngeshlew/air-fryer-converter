@@ -10,3 +10,17 @@
   to = "/index.html"
   status = 200
 
+# Prevent caching of JS/CSS assets to avoid stale service worker issues
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+    X-Content-Type-Options = "nosniff"
+
+# Prevent service worker registration
+[[headers]]
+  for = "/*.js"
+  [headers.values]
+    Service-Worker-Allowed = "none"
+    Cache-Control = "public, max-age=0, must-revalidate"
+

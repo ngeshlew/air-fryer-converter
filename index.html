@@ -62,45 +62,39 @@
   </head>
   <body>
     <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-    
-    <!-- Service Worker Registration -->
+    <!-- Service Worker Cleanup - Run BEFORE app loads -->
     <script>
-      // Disable service worker completely to fix caching issues
-      if ('serviceWorker' in navigator) {
-        window.addEventListener('load', async () => {
-          try {
-            // Unregister ALL service workers
-            const registrations = await navigator.serviceWorker.getRegistrations();
-            if (registrations.length > 0) {
-              console.log('Unregistering', registrations.length, 'service worker(s)...');
-              for (let registration of registrations) {
-                await registration.unregister();
-                console.log('Unregistered service worker');
-              }
+      (function() {
+        'use strict';
+        
+        // Immediately unregister service workers and clear caches
+        if ('serviceWorker' in navigator) {
+          navigator.serviceWorker.getRegistrations().then(function(registrations) {
+            for (let registration of registrations) {
+              registration.unregister().then(function(success) {
+                if (success) {
+                  console.log('[SW] Service worker unregistered');
+                }
+              });
             }
-            
-            // Clear ALL caches
-            if ('caches' in window) {
-              const cacheNames = await caches.keys();
-              if (cacheNames.length > 0) {
-                console.log('Clearing', cacheNames.length, 'cache(s)...');
-                await Promise.all(cacheNames.map(name => caches.delete(name)));
-                console.log('All caches cleared');
-              }
-            }
-            
-            // Force reload ONCE after clearing (check sessionStorage to avoid infinite loop)
-            if (!sessionStorage.getItem('sw_cleared')) {
-              sessionStorage.setItem('sw_cleared', 'true');
-              console.log('Reloading to get fresh assets...');
-              location.reload();
-            }
-          } catch (error) {
-            console.log('Cache clearing error:', error);
-          }
-        });
-      }
+          });
+        }
+        
+        // Clear all caches immediately
+        if ('caches' in window) {
+          caches.keys().then(function(cacheNames) {
+            return Promise.all(
+              cacheNames.map(function(cacheName) {
+                return caches.delete(cacheName);
+              })
+            );
+          }).then(function() {
+            console.log('[Cache] All caches cleared');
+          });
+        }
+      })();
     </script>
+    
+    <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
