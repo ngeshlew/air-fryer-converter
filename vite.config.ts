@@ -29,9 +29,9 @@ export default defineConfig({
       disable: process.env.NODE_ENV === 'development',
       includeAssets: ['vite.svg'],
       manifest: {
-        name: 'Electricity Tracker',
-        short_name: 'ElecTracker',
-        description: 'AI-powered electricity consumption tracking dashboard with real-time analytics',
+        name: 'Air Fryer Converter',
+        short_name: 'AirFryer',
+        description: 'Convert oven recipes to air fryer settings and discover recipes from UK supermarkets',
         theme_color: '#8b5cf6',
         background_color: '#0a0a0a',
         display: 'standalone',
