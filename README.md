@@ -1,14 +1,32 @@
 # 🍳 Air Fryer Converter
 
-A modern web application for converting oven cooking instructions to air fryer settings and discovering UK supermarket air fryer recipes.
+A modern, full-stack web application for converting oven cooking instructions to air fryer settings and discovering recipes from UK supermarkets.
 
-## Features
+**🎯 Live Demo:** Ready for deployment to Railway + Netlify!
 
-- **Oven to Air Fryer Calculator**: Convert temperature and cooking time from oven to air fryer settings
-- **Recipe Browser**: Browse air fryer recipes from UK supermarkets (ALDI, Waitrose, Tesco, M&S, etc.)
-- **Recipe of the Day**: Featured daily recipe on the dashboard
-- **Conversion Tips**: Helpful tips for air fryer cooking
-- **Responsive Design**: Works on desktop, tablet, and mobile
+## ✨ Features
+
+### 🧮 Oven to Air Fryer Calculator
+- Convert oven temperature and time to air fryer settings
+- Preset temperatures (140-220°C) or custom input
+- Automatic calculations (reduces temp by 20°C, time by 20%)
+- Smart tips: when to check food, browning adjustments
+- Input validation and error handling
+
+### 📖 Recipe Browser
+- Browse recipes from UK supermarkets (ALDI, Waitrose, Tesco, M&S, BBC Good Food, Happy Foodie)
+- Filter by supermarket
+- Search by recipe name
+- Detailed recipe view with ingredients and instructions
+- Recipe of the Day on dashboard
+
+### 🎨 Modern UI/UX
+- Animated sidebar (desktop) that collapses
+- Bottom navigation (mobile)
+- Light/dark/system themes
+- Responsive design (mobile-first)
+- Loading states and smooth animations
+- IBM Plex Mono font for technical aesthetic
 
 ## Tech Stack
 
@@ -81,17 +99,25 @@ npm run dev
 
 3. Open your browser to `http://localhost:5173`
 
-## Deployment
+## 🚀 Deployment
 
-### Frontend (Netlify)
-- Build command: `npm install && npm run build`
-- Publish directory: `dist`
-- Environment variable: `VITE_API_URL`
+**See [DEPLOYMENT.md](DEPLOYMENT.md) for complete step-by-step deployment guide.**
 
-### Backend (Railway)
-- Build command: `cd server && npm install && npx prisma generate && npm run build`
-- Start command: `cd server && npm start`
-- Environment variables: `DATABASE_URL`, `PORT`, `NODE_ENV`
+### Quick Start
+
+**Backend (Railway):**
+1. Connect GitHub repo to Railway
+2. Add PostgreSQL database
+3. Run `npx prisma migrate deploy`
+4. Set environment variables
+
+**Frontend (Netlify):**
+1. Connect GitHub repo to Netlify
+2. Set build command: `npm install && npm run build`
+3. Set publish directory: `dist`
+4. Add `VITE_API_URL` environment variable
+
+**Full instructions in [DEPLOYMENT.md](DEPLOYMENT.md)**
 
 ## Project Structure
 
@@ -116,8 +142,41 @@ air-fryer-converter/
 
 MIT
 
-## Acknowledgments
+## 📊 Project Status
 
-- Inspired by timezoneworldclock.com
-- Based on the Fuel Tracker project architecture
+**Implementation:** 7/8 Todos Complete ✅
+
+- ✅ Project Setup & Structure
+- ✅ Database Schema (Prisma + PostgreSQL)
+- ✅ Backend API (Express + TypeScript)
+- ✅ Calculator Component
+- ✅ Dashboard Layout
+- ✅ Recipe Browser
+- ⏳ Web Scraping (pending - can use manual data)
+- ✅ Deployment Documentation
+
+See [PROJECT_SUMMARY.md](PROJECT_SUMMARY.md) for detailed status and [IMPLEMENTATION_STATUS.md](IMPLEMENTATION_STATUS.md) for progress tracking.
+
+## 📚 Documentation
+
+- **[README.md](README.md)** - This file, project overview
+- **[DEPLOYMENT.md](DEPLOYMENT.md)** - Complete deployment guide for Railway + Netlify
+- **[PROJECT_SUMMARY.md](PROJECT_SUMMARY.md)** - Feature list, tech stack, future enhancements
+- **[IMPLEMENTATION_STATUS.md](IMPLEMENTATION_STATUS.md)** - Development progress tracker
+
+## 🤝 Contributing
+
+Contributions welcome! Areas needing help:
+- Web scraping implementation (see `server/src/services/scrapers/`)
+- Additional recipe sources
+- UI/UX improvements
+- Test coverage
+- Documentation
+
+## 🙏 Acknowledgments
+
+- **Fuel Tracker** project for architecture inspiration
+- **Shadcn UI** for beautiful components
+- **timezoneworldclock.com** for design inspiration
+- **UK Supermarkets** for recipe content
 
