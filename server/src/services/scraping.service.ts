@@ -50,13 +50,16 @@ export class ScrapingService {
       data: {
         supermarket,
         status: ScrapingStatus.IN_PROGRESS,
-        recipesScraped: 0,
-        recipesFailed: 0,
+        recipesFound: 0,
+        recipesAdded: 0,
+        recipesUpdated: 0,
       },
     });
 
     let successCount = 0;
     let failedCount = 0;
+    let addedCount = 0;
+    let updatedCount = 0;
 
     try {
       // Scrape recipes
@@ -65,8 +68,13 @@ export class ScrapingService {
       // Save recipes to database
       for (const recipe of recipes) {
         try {
-          await this.saveRecipe(recipe);
+          const result = await this.saveRecipe(recipe);
           successCount++;
+          if (result === 'added') {
+            addedCount++;
+          } else if (result === 'updated') {
+            updatedCount++;
+          }
         } catch (error) {
           logger.error(`Failed to save recipe ${recipe.title}:`, error);
           failedCount++;
@@ -78,8 +86,9 @@ export class ScrapingService {
         where: { id: log.id },
         data: {
           status: ScrapingStatus.COMPLETED,
-          recipesScraped: successCount,
-          recipesFailed: failedCount,
+          recipesFound: recipes.length,
+          recipesAdded: addedCount,
+          recipesUpdated: updatedCount,
           completedAt: new Date(),
         },
       });
@@ -99,7 +108,7 @@ export class ScrapingService {
         where: { id: log.id },
         data: {
           status: ScrapingStatus.FAILED,
-          error: error instanceof Error ? error.message : 'Unknown error',
+          errorMessage: error instanceof Error ? error.message : 'Unknown error',
           completedAt: new Date(),
         },
       });
@@ -181,8 +190,9 @@ export class ScrapingService {
 
   /**
    * Save scraped recipe to database
+   * Returns 'added' if new recipe, 'updated' if existing recipe
    */
-  private async saveRecipe(recipe: ScrapedRecipe): Promise<void> {
+  private async saveRecipe(recipe: ScrapedRecipe): Promise<'added' | 'updated'> {
     try {
       // Check if recipe already exists by URL
       const existing = await prisma.recipe.findFirst({
@@ -208,6 +218,7 @@ export class ScrapingService {
         });
 
         logger.info(`Updated existing recipe: ${recipe.title}`);
+        return 'updated';
       } else {
         // Create new recipe
         await prisma.recipe.create({
@@ -215,6 +226,7 @@ export class ScrapingService {
         });
 
         logger.info(`Created new recipe: ${recipe.title}`);
+        return 'added';
       }
     } catch (error) {
       logger.error(`Error saving recipe ${recipe.title}:`, error);
