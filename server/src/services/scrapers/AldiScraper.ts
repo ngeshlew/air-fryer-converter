@@ -30,7 +30,7 @@ export class AldiScraper extends BaseScraper {
           .filter(href => {
             if (!href) return false;
             const url = href.toLowerCase();
-            // Exclude collection/category pages
+            // Exclude collection/category pages - these are directories, not individual recipes
             const excludePatterns = [
               '/recipes/collections/',
               '/recipes/scottish',
@@ -38,13 +38,30 @@ export class AldiScraper extends BaseScraper {
               '/recipes/courses',
               '/recipes/',
             ];
-            // Only include URLs that look like individual recipes
-            // They should have more path segments after /recipes/
-            const pathParts = new URL(url).pathname.split('/').filter(p => p);
-            const isRecipePage = pathParts.length >= 3 && 
-                                 pathParts[0] === 'recipes' && 
-                                 !excludePatterns.some(pattern => url.includes(pattern));
-            return isRecipePage;
+            // Exclude if it ends with just /recipes or /recipes/collections/...
+            if (url.endsWith('/recipes') || url.endsWith('/recipes/')) return false;
+            if (url.includes('/recipes/collections/')) return false;
+            
+            // Include URLs that have a recipe name after /recipes/collections/air-fryer/
+            // Example: /recipes/collections/air-fryer/air-fryer-banana-chips
+            if (url.includes('/recipes/collections/air-fryer/')) {
+              const pathParts = url.split('/recipes/collections/air-fryer/')[1];
+              // Should have a recipe name, not be empty or just a slash
+              return pathParts && pathParts.length > 0 && !pathParts.includes('/');
+            }
+            
+            // For other recipe URLs, check if they have a recipe name
+            const pathParts = url.split('/recipes/');
+            if (pathParts.length > 1) {
+              const afterRecipes = pathParts[1];
+              // Should have content after /recipes/ and not be a collection/category
+              return afterRecipes && 
+                     afterRecipes.length > 0 && 
+                     !excludePatterns.some(pattern => url.includes(pattern)) &&
+                     !afterRecipes.match(/^(scottish|christmas|courses)/);
+            }
+            
+            return false;
           });
       });
 

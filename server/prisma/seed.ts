@@ -304,7 +304,7 @@ const sampleRecipes = [
     description: 'Crispy, healthy banana chips made in the air fryer. Perfect snack with just 4 ingredients.',
     supermarket: Supermarket.ALDI,
     sourceUrl: 'https://www.aldi.co.uk/recipes/collections/air-fryer/air-fryer-banana-chips',
-    imageUrl: 'https://images.unsplash.com/photo-1627895451616-4a8c100eb0d8?w=800',
+    imageUrl: 'https://images.unsplash.com/photo-1608039829572-78524f79c4c7?w=800&q=80',
     prepTime: 5,
     cookTime: 20,
     servings: 2,

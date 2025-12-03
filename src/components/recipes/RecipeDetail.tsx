@@ -1,6 +1,6 @@
 // Recipe Detail Page Component
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { AppSidebar } from '@/components/dashboard/AppSidebar';
 import { Header } from '@/components/dashboard/Header';
@@ -16,6 +16,7 @@ export const RecipeDetail: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const { currentRecipe, isLoading, error, loadRecipe } = useRecipeStore();
+  const [imageError, setImageError] = useState(false);
 
   useEffect(() => {
     if (id) {
@@ -87,15 +88,23 @@ export const RecipeDetail: React.FC = () => {
             </Button>
 
             {/* Recipe Image */}
-            {currentRecipe.imageUrl && (
+            {currentRecipe.imageUrl && !imageError ? (
               <div className="aspect-video w-full overflow-hidden rounded-lg bg-muted">
                 <img
                   src={currentRecipe.imageUrl}
                   alt={currentRecipe.title}
                   className="h-full w-full object-cover"
+                  onError={() => setImageError(true)}
                 />
               </div>
-            )}
+            ) : currentRecipe.imageUrl && imageError ? (
+              <div className="aspect-video w-full overflow-hidden rounded-lg bg-gradient-to-br from-muted to-muted/50 flex items-center justify-center">
+                <div className="text-center space-y-2">
+                  <span className="text-4xl">🍳</span>
+                  <p className="text-sm text-muted-foreground">Image unavailable</p>
+                </div>
+              </div>
+            ) : null}
 
             {/* Recipe Header */}
             <div className="space-y-4">
