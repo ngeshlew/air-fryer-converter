@@ -1,6 +1,7 @@
 import { Supermarket, Difficulty } from '@prisma/client';
 import { BaseScraper, ScrapedRecipe } from './BaseScraper.js';
 import { logger } from '../../utils/logger.js';
+import { getRecipeEvaluationCode } from './evaluationCode.js';
 
 export class MarksAndSpencerScraper extends BaseScraper {
   constructor() {
@@ -22,21 +23,24 @@ export class MarksAndSpencerScraper extends BaseScraper {
       // Wait for recipe cards to load
       await this.page.waitForSelector('a[href*="/recipes/"]', { timeout: 15000 });
 
-      // Extract recipe URLs
-      const urls = await this.page.evaluate(() => {
-        const links = Array.from(document.querySelectorAll('a[href*="/recipes/"]'));
-        return links
-          .map(link => (link as HTMLAnchorElement).href)
-          .filter(href => {
-            const url = href.toLowerCase();
-            return url && 
-                   url.includes('/recipes/') && 
-                   !url.endsWith('/recipes') && 
-                   !url.endsWith('/recipes/') &&
-                   !url.includes('/collections/') &&
-                   !url.includes('/c/food-and-wine/');
-          });
-      });
+      // Extract recipe URLs - filter for actual recipe pages
+      const urlExtractionCode = `
+        (function() {
+          const links = Array.from(document.querySelectorAll('a[href*="/recipes/"]'));
+          return links
+            .map(function(link) { return link.href; })
+            .filter(function(href) {
+              if (!href) return false;
+              const url = href.toLowerCase();
+              return url.includes('/recipes/') && 
+                     !url.endsWith('/recipes') && 
+                     !url.endsWith('/recipes/') &&
+                     !url.includes('/collections/') &&
+                     !url.includes('/c/food-and-wine/');
+            });
+        })();
+      `;
+      const urls = await this.page.evaluate(urlExtractionCode);
 
       // Remove duplicates and limit
       const uniqueUrls = Array.from(new Set(urls)).slice(0, limit);
@@ -59,124 +63,9 @@ export class MarksAndSpencerScraper extends BaseScraper {
     try {
       await this.navigateWithRetry(url);
 
-      // Extract recipe data
-      const recipeData = await this.page.evaluate(() => {
-        const getText = (selector) => {
-          const element = document.querySelector(selector);
-          return element?.textContent?.trim() || null;
-        };
-
-        const getAllText = (selector) => {
-          const elements = Array.from(document.querySelectorAll(selector));
-          return elements
-            .map(el => el.textContent?.trim())
-            .filter(text => text !== null && text !== undefined && text !== '');
-        };
-
-        // Get title
-        const title = getText('h1') || getText('[class*="title"]') || getText('[class*="Title"]');
-
-        // Get description
-        const description = getText('[class*="description"]') || 
-                          getText('[class*="Description"]') || 
-                          getText('[class*="intro"]') ||
-                          getText('p');
-
-        // Get image - try multiple selectors for M&S recipe pages
-        const imageSelectors = [
-          'img[src*="recipe"]',
-          'img[alt*="recipe"]',
-          '[class*="hero"] img',
-          '[class*="Hero"] img',
-          '[class*="recipe-image"] img',
-          '[class*="RecipeImage"] img',
-          '[class*="product-image"] img',
-          'picture img',
-          'article img[src*="."]',
-          'main img[src*="."]',
-          'main img'
-        ];
-        
-        let imageUrl = null;
-        for (const selector of imageSelectors) {
-          const img = document.querySelector(selector);
-          if (img && img.src) {
-            if (!img.src.startsWith('data:') && img.naturalWidth > 200) {
-              imageUrl = img.src;
-              break;
-            }
-          }
-        }
-        
-        // Ensure full URL if relative
-        if (imageUrl && imageUrl.startsWith('/')) {
-          imageUrl = `https://www.marksandspencer.com${imageUrl}`;
-        }
-        
-        // Remove query parameters
-        if (imageUrl && imageUrl.includes('?')) {
-          const urlParts = imageUrl.split('?');
-          imageUrl = urlParts[0];
-        }
-
-        // Get prep time
-        const prepTimeText = getText('[class*="prep"]') || 
-                           getText('[class*="Prep"]') ||
-                           getText('[data-test*="prep"]');
-
-        // Get cook time
-        const cookTimeText = getText('[class*="cook"]') || 
-                           getText('[class*="Cook"]') ||
-                           getText('[data-test*="cook"]');
-
-        // Get servings
-        const servingsText = getText('[class*="serving"]') || 
-                           getText('[class*="Serving"]') || 
-                           getText('[class*="serves"]') ||
-                           getText('[data-test*="serves"]');
-
-        // Get difficulty
-        const difficultyText = getText('[class*="difficulty"]') || 
-                             getText('[class*="Difficulty"]') ||
-                             getText('[data-test*="difficulty"]');
-
-        // Get ingredients - M&S uses various structures
-        const ingredientsHeader = Array.from(document.querySelectorAll('h2, h3')).find(el => 
-          el.textContent?.toLowerCase().includes('ingredient')
-        );
-        const ingredients = ingredientsHeader?.nextElementSibling?.querySelectorAll('li') ?
-                          Array.from(ingredientsHeader.nextElementSibling.querySelectorAll('li')).map(li => li.textContent?.trim()).filter(Boolean) :
-                          getAllText('[class*="ingredient"] li') || 
-                          getAllText('[class*="Ingredient"] li') ||
-                          getAllText('ul li').filter(text => 
-                            text.match(/\d+/) && (text.includes('g') || text.includes('ml') || text.includes('tbsp') || text.includes('tsp') || text.includes('kg'))
-                          );
-
-        // Get instructions - M&S uses "Method" section
-        const methodHeader = Array.from(document.querySelectorAll('h2, h3')).find(el => 
-          el.textContent?.toLowerCase().includes('method') || 
-          el.textContent?.toLowerCase().includes('instruction')
-        );
-        const instructions = methodHeader?.nextElementSibling?.querySelectorAll('ol li, li') ?
-                          Array.from(methodHeader.nextElementSibling.querySelectorAll('ol li, li')).map(li => li.textContent?.trim()).filter(Boolean) as string[] :
-                          getAllText('[class*="instruction"] li') || 
-                          getAllText('[class*="Instruction"] li') ||
-                          getAllText('[class*="method"] li') ||
-                          getAllText('[class*="Method"] li') ||
-                          getAllText('ol li');
-
-        return {
-          title,
-          description,
-          imageUrl,
-          prepTimeText,
-          cookTimeText,
-          servingsText,
-          difficultyText,
-          ingredients,
-          instructions,
-        };
-      });
+      // Extract recipe data - use function string to avoid TypeScript compilation issues
+      const evaluationCode = getRecipeEvaluationCode(this.baseUrl);
+      const recipeData = await this.page.evaluate(evaluationCode);
 
       // Validate required fields
       if (!recipeData.title) {

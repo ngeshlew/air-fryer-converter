@@ -1,6 +1,7 @@
 import { Supermarket, Difficulty } from '@prisma/client';
 import { BaseScraper, ScrapedRecipe } from './BaseScraper.js';
 import { logger } from '../../utils/logger.js';
+import { getRecipeEvaluationCode } from './evaluationCode.js';
 
 export class AldiScraper extends BaseScraper {
   constructor() {
@@ -23,47 +24,42 @@ export class AldiScraper extends BaseScraper {
       await this.page.waitForSelector('a[href*="/recipes/"]', { timeout: 10000 });
 
       // Extract recipe URLs - only get actual recipe pages, not collection pages
-      const urls = await this.page.evaluate(() => {
-        const links = Array.from(document.querySelectorAll('a[href*="/recipes/"]'));
-        return links
-          .map(link => (link as HTMLAnchorElement).href)
-          .filter(href => {
-            if (!href) return false;
-            const url = href.toLowerCase();
-            // Exclude collection/category pages - these are directories, not individual recipes
-            const excludePatterns = [
-              '/recipes/collections/',
-              '/recipes/scottish',
-              '/recipes/christmas',
-              '/recipes/courses',
-              '/recipes/',
-            ];
-            // Exclude if it ends with just /recipes or /recipes/collections/...
-            if (url.endsWith('/recipes') || url.endsWith('/recipes/')) return false;
-            if (url.includes('/recipes/collections/')) return false;
-            
-            // Include URLs that have a recipe name after /recipes/collections/air-fryer/
-            // Example: /recipes/collections/air-fryer/air-fryer-banana-chips
-            if (url.includes('/recipes/collections/air-fryer/')) {
-              const pathParts = url.split('/recipes/collections/air-fryer/')[1];
-              // Should have a recipe name, not be empty or just a slash
-              return pathParts && pathParts.length > 0 && !pathParts.includes('/');
-            }
-            
-            // For other recipe URLs, check if they have a recipe name
-            const pathParts = url.split('/recipes/');
-            if (pathParts.length > 1) {
-              const afterRecipes = pathParts[1];
-              // Should have content after /recipes/ and not be a collection/category
-              return afterRecipes && 
-                     afterRecipes.length > 0 && 
-                     !excludePatterns.some(pattern => url.includes(pattern)) &&
-                     !afterRecipes.match(/^(scottish|christmas|courses)/);
-            }
-            
-            return false;
-          });
-      });
+      const urlExtractionCode = `
+        (function() {
+          const links = Array.from(document.querySelectorAll('a[href*="/recipes/"]'));
+          return links
+            .map(function(link) { return link.href; })
+            .filter(function(href) {
+              if (!href) return false;
+              const url = href.toLowerCase();
+              const excludePatterns = [
+                '/recipes/collections/',
+                '/recipes/scottish',
+                '/recipes/christmas',
+                '/recipes/courses',
+                '/recipes/',
+              ];
+              if (url.endsWith('/recipes') || url.endsWith('/recipes/')) return false;
+              if (url.includes('/recipes/collections/')) {
+                if (url.includes('/recipes/collections/air-fryer/')) {
+                  const pathParts = url.split('/recipes/collections/air-fryer/')[1];
+                  return pathParts && pathParts.length > 0 && !pathParts.includes('/');
+                }
+                return false;
+              }
+              const pathParts = url.split('/recipes/');
+              if (pathParts.length > 1) {
+                const afterRecipes = pathParts[1];
+                return afterRecipes && 
+                       afterRecipes.length > 0 && 
+                       !excludePatterns.some(function(pattern) { return url.includes(pattern); }) &&
+                       !afterRecipes.match(/^(scottish|christmas|courses)/);
+              }
+              return false;
+            });
+        })();
+      `;
+      const urls = await this.page.evaluate(urlExtractionCode);
 
       // Remove duplicates and limit
       const uniqueUrls = Array.from(new Set(urls)).slice(0, limit);
@@ -86,115 +82,9 @@ export class AldiScraper extends BaseScraper {
     try {
       await this.navigateWithRetry(url);
 
-      // Extract recipe data
-      const recipeData = await this.page.evaluate(() => {
-        // Helper function to get text content
-        const getText = (selector) => {
-          const element = document.querySelector(selector);
-          return element?.textContent?.trim() || null;
-        };
-
-        // Helper function to get all text contents
-        const getAllText = (selector) => {
-          const elements = Array.from(document.querySelectorAll(selector));
-          return elements
-            .map(el => el.textContent?.trim())
-            .filter(text => text !== null && text !== undefined && text !== '');
-        };
-
-        // Get title
-        const title = getText('h1') || getText('[class*="title"]') || getText('[class*="Title"]');
-
-        // Get description
-        const description = getText('[class*="description"]') || getText('[class*="Description"]') || getText('p');
-
-        // Get image - try multiple selectors for ALDI recipe pages
-        // Priority: recipe-specific images, hero images, main content images
-        const imageSelectors = [
-          'img[src*="recipe"]',
-          'img[alt*="recipe"]',
-          '[class*="hero"] img',
-          '[class*="Hero"] img',
-          '[class*="recipe-image"] img',
-          '[class*="RecipeImage"] img',
-          'article img[src*="."]',
-          'main img[src*="."]',
-          'picture img',
-          'article img',
-          'main img'
-        ];
-        
-        let imageUrl = null;
-        for (const selector of imageSelectors) {
-          const img = document.querySelector(selector);
-          if (img && img.src) {
-            // Skip data URIs and very small images
-            if (!img.src.startsWith('data:') && img.naturalWidth > 200) {
-              imageUrl = img.src;
-              break;
-            }
-          }
-        }
-        
-        // Ensure full URL if relative
-        if (imageUrl && imageUrl.startsWith('/')) {
-          imageUrl = `https://www.aldi.co.uk${imageUrl}`;
-        }
-        
-        // Remove query parameters that might limit image size
-        if (imageUrl && imageUrl.includes('?')) {
-          const urlParts = imageUrl.split('?');
-          imageUrl = urlParts[0];
-        }
-
-        // Get prep time
-        const prepTimeText = getText('[class*="prep"]') || getText('[class*="Prep"]');
-
-        // Get cook time
-        const cookTimeText = getText('[class*="cook"]') || getText('[class*="Cook"]');
-
-        // Get servings
-        const servingsText = getText('[class*="serving"]') || getText('[class*="Serving"]') || getText('[class*="serves"]');
-
-        // Get difficulty
-        const difficultyText = getText('[class*="difficulty"]') || getText('[class*="Difficulty"]');
-
-        // Get ingredients - ALDI uses "Ingredients" section
-        const ingredientsHeader = Array.from(document.querySelectorAll('h2, h3')).find(el => 
-          el.textContent?.toLowerCase().includes('ingredient')
-        );
-        const ingredients = ingredientsHeader?.nextElementSibling?.querySelectorAll('li') ?
-                          Array.from(ingredientsHeader.nextElementSibling.querySelectorAll('li')).map(li => li.textContent?.trim()).filter(Boolean) :
-                          getAllText('[class*="ingredient"] li') || 
-                          getAllText('[class*="Ingredient"] li') ||
-                          getAllText('ul li').filter(text => 
-                            text.match(/\d+/) && (text.includes('g') || text.includes('ml') || text.includes('tbsp') || text.includes('tsp') || text.includes('Banana'))
-                          );
-
-        // Get instructions - ALDI uses "Method" section  
-        const methodHeader = Array.from(document.querySelectorAll('h2, h3')).find(el => 
-          el.textContent?.toLowerCase().includes('method')
-        );
-        const instructions = methodHeader?.nextElementSibling?.querySelectorAll('ol li, li') ?
-                          Array.from(methodHeader.nextElementSibling.querySelectorAll('ol li, li')).map(li => li.textContent?.trim()).filter(Boolean) as string[] :
-                          getAllText('[class*="instruction"] li') || 
-                           getAllText('[class*="Instruction"] li') ||
-                           getAllText('[class*="method"] li') ||
-                           getAllText('[class*="Method"] li') ||
-                           getAllText('ol li');
-
-        return {
-          title,
-          description,
-          imageUrl,
-          prepTimeText,
-          cookTimeText,
-          servingsText,
-          difficultyText,
-          ingredients,
-          instructions,
-        };
-      });
+      // Extract recipe data - use function string to avoid TypeScript compilation issues
+      const evaluationCode = getRecipeEvaluationCode(this.baseUrl);
+      const recipeData = await this.page.evaluate(evaluationCode);
 
       // Validate required fields
       if (!recipeData.title) {

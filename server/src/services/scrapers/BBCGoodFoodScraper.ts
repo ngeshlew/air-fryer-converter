@@ -1,6 +1,7 @@
 import { Supermarket, Difficulty } from '@prisma/client';
 import { BaseScraper, ScrapedRecipe } from './BaseScraper.js';
 import { logger } from '../../utils/logger.js';
+import { getRecipeEvaluationCode } from './evaluationCode.js';
 
 export class BBCGoodFoodScraper extends BaseScraper {
   constructor() {
@@ -22,20 +23,23 @@ export class BBCGoodFoodScraper extends BaseScraper {
       // Wait for recipe cards to load
       await this.page.waitForSelector('a[href*="/food/recipes/"]', { timeout: 15000 });
 
-      // Extract recipe URLs
-      const urls = await this.page.evaluate(() => {
-        const links = Array.from(document.querySelectorAll('a[href*="/food/recipes/"]'));
-        return links
-          .map(link => (link as HTMLAnchorElement).href)
-          .filter(href => {
-            const url = href.toLowerCase();
-            return url && 
-                   url.includes('/food/recipes/') && 
-                   !url.endsWith('/food/recipes') && 
-                   !url.endsWith('/food/recipes/') &&
-                   !url.includes('/collections/');
-          });
-      });
+      // Extract recipe URLs - filter for actual recipe pages
+      const urlExtractionCode = `
+        (function() {
+          const links = Array.from(document.querySelectorAll('a[href*="/food/recipes/"]'));
+          return links
+            .map(function(link) { return link.href; })
+            .filter(function(href) {
+              if (!href) return false;
+              const url = href.toLowerCase();
+              return url.includes('/food/recipes/') && 
+                     !url.endsWith('/food/recipes') && 
+                     !url.endsWith('/food/recipes/') &&
+                     !url.includes('/collections/');
+            });
+        })();
+      `;
+      const urls = await this.page.evaluate(urlExtractionCode);
 
       // Remove duplicates and limit
       const uniqueUrls = Array.from(new Set(urls)).slice(0, limit);
@@ -58,8 +62,9 @@ export class BBCGoodFoodScraper extends BaseScraper {
     try {
       await this.navigateWithRetry(url);
 
-      // Extract recipe data
-      const recipeData = await this.page.evaluate(() => {
+      // Extract recipe data - use function string to avoid TypeScript compilation issues
+      const evaluationCode = getRecipeEvaluationCode(this.baseUrl);
+      const recipeData = await this.page.evaluate(evaluationCode);
         const getText = (selector) => {
           const element = document.querySelector(selector);
           return element?.textContent?.trim() || null;

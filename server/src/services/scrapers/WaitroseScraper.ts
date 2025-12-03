@@ -1,6 +1,7 @@
 import { Supermarket, Difficulty } from '@prisma/client';
 import { BaseScraper, ScrapedRecipe } from './BaseScraper.js';
 import { logger } from '../../utils/logger.js';
+import { getRecipeEvaluationCode } from './evaluationCode.js';
 
 export class WaitroseScraper extends BaseScraper {
   constructor() {
@@ -23,12 +24,22 @@ export class WaitroseScraper extends BaseScraper {
       await this.page.waitForSelector('a[href*="/recipes/"]', { timeout: 10000 });
 
       // Extract recipe URLs
-      const urls = await this.page.evaluate(() => {
-        const links = Array.from(document.querySelectorAll('a[href*="/recipes/"]'));
-        return links
-          .map(link => (link as HTMLAnchorElement).href)
-          .filter(href => href && !href.endsWith('/recipes') && !href.endsWith('/recipes/'));
-      });
+      const urlExtractionCode = `
+        (function() {
+          const links = Array.from(document.querySelectorAll('a[href*="/recipes/"]'));
+          return links
+            .map(function(link) { return link.href; })
+            .filter(function(href) {
+              return href && !href.endsWith('/recipes') && !href.endsWith('/recipes/') && 
+                     href.includes('/recipes/') && !href.includes('/recipes/all-recipes') &&
+                     !href.includes('/recipes/all-categories') && !href.includes('/recipes/christmas') &&
+                     !href.includes('/recipes/new') && !href.includes('/recipes/quick-easy') &&
+                     !href.includes('/recipes/meal-maths') && !href.includes('/recipes/baking') &&
+                     !href.includes('/recipes/meals-dishes/');
+            });
+        })();
+      `;
+      const urls = await this.page.evaluate(urlExtractionCode);
 
       // Remove duplicates and limit
       const uniqueUrls = Array.from(new Set(urls)).slice(0, limit);
@@ -51,79 +62,9 @@ export class WaitroseScraper extends BaseScraper {
     try {
       await this.navigateWithRetry(url);
 
-      // Extract recipe data
-      const recipeData = await this.page.evaluate(() => {
-        const getText = (selector) => {
-          const element = document.querySelector(selector);
-          return element?.textContent?.trim() || null;
-        };
-
-        const getAllText = (selector) => {
-          const elements = Array.from(document.querySelectorAll(selector));
-          return elements
-            .map(el => el.textContent?.trim())
-            .filter(text => text !== null && text !== undefined && text !== '');
-        };
-
-        const title = getText('h1') || getText('[class*="RecipeTitle"]');
-        const description = getText('[class*="description"]') || getText('[class*="intro"]');
-        
-        // Get image - try multiple selectors for Waitrose recipe pages
-        const imageSelectors = [
-          'img[src*="recipe"]',
-          'img[alt*="recipe"]',
-          '[class*="hero"] img',
-          '[class*="Hero"] img',
-          '[class*="recipe-image"] img',
-          '[class*="RecipeImage"] img',
-          'picture img',
-          'article img[src*="."]',
-          'main img[src*="."]',
-          'main img'
-        ];
-        
-        let imageUrl = null;
-        for (const selector of imageSelectors) {
-          const img = document.querySelector(selector);
-          if (img && img.src) {
-            if (!img.src.startsWith('data:') && img.naturalWidth > 200) {
-              imageUrl = img.src;
-              break;
-            }
-          }
-        }
-        
-        // Ensure full URL if relative
-        if (imageUrl && imageUrl.startsWith('/')) {
-          imageUrl = `https://www.waitrose.com${imageUrl}`;
-        }
-        
-        // Remove query parameters
-        if (imageUrl && imageUrl.includes('?')) {
-          const urlParts = imageUrl.split('?');
-          imageUrl = urlParts[0];
-        }
-
-        const prepTimeText = getText('[class*="prep"]') || getText('[aria-label*="prep"]');
-        const cookTimeText = getText('[class*="cook"]') || getText('[aria-label*="cook"]');
-        const servingsText = getText('[class*="serving"]') || getText('[aria-label*="serves"]');
-        const difficultyText = getText('[class*="difficulty"]');
-
-        const ingredients = getAllText('[class*="ingredient"] li') || getAllText('ul li');
-        const instructions = getAllText('[class*="instruction"] li') || getAllText('[class*="method"] li') || getAllText('ol li');
-
-        return {
-          title,
-          description,
-          imageUrl,
-          prepTimeText,
-          cookTimeText,
-          servingsText,
-          difficultyText,
-          ingredients,
-          instructions,
-        };
-      });
+      // Extract recipe data - use function string to avoid TypeScript compilation issues
+      const evaluationCode = getRecipeEvaluationCode(this.baseUrl);
+      const recipeData = await this.page.evaluate(evaluationCode);
 
       if (!recipeData.title || recipeData.ingredients.length === 0 || recipeData.instructions.length === 0) {
         logger.warn(`Incomplete recipe data for: ${url}`);
