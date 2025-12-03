@@ -1,5 +1,5 @@
 import { Supermarket, ScrapingStatus } from '@prisma/client';
-import { prisma } from '../utils/database.js';
+import prisma from '../utils/database.js';
 import { logger } from '../utils/logger.js';
 import { AldiScraper } from './scrapers/AldiScraper.js';
 import { WaitroseScraper } from './scrapers/WaitroseScraper.js';
