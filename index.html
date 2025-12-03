@@ -62,34 +62,54 @@
   </head>
   <body>
     <div id="root"></div>
-    <!-- Service Worker Cleanup - Run BEFORE app loads -->
+    <!-- Service Worker Cleanup - Run IMMEDIATELY before app loads -->
     <script>
       (function() {
         'use strict';
         
-        // Immediately unregister service workers and clear caches
+        // Block service worker registration completely
         if ('serviceWorker' in navigator) {
+          // Override register to prevent new registrations
+          const originalRegister = navigator.serviceWorker.register;
+          navigator.serviceWorker.register = function() {
+            console.warn('[SW] Service worker registration blocked');
+            return Promise.reject(new Error('Service workers are disabled'));
+          };
+          
+          // Immediately unregister all existing service workers
           navigator.serviceWorker.getRegistrations().then(function(registrations) {
-            for (let registration of registrations) {
-              registration.unregister().then(function(success) {
-                if (success) {
-                  console.log('[SW] Service worker unregistered');
-                }
+            if (registrations.length > 0) {
+              console.log('[SW] Unregistering', registrations.length, 'service worker(s)...');
+              registrations.forEach(function(registration) {
+                registration.unregister().then(function(success) {
+                  if (success) {
+                    console.log('[SW] Service worker unregistered successfully');
+                  }
+                }).catch(function(err) {
+                  console.warn('[SW] Error unregistering:', err);
+                });
               });
             }
+          }).catch(function(err) {
+            console.warn('[SW] Error getting registrations:', err);
           });
         }
         
         // Clear all caches immediately
         if ('caches' in window) {
           caches.keys().then(function(cacheNames) {
-            return Promise.all(
-              cacheNames.map(function(cacheName) {
-                return caches.delete(cacheName);
-              })
-            );
+            if (cacheNames.length > 0) {
+              console.log('[Cache] Clearing', cacheNames.length, 'cache(s)...');
+              return Promise.all(
+                cacheNames.map(function(cacheName) {
+                  return caches.delete(cacheName);
+                })
+              );
+            }
           }).then(function() {
             console.log('[Cache] All caches cleared');
+          }).catch(function(err) {
+            console.warn('[Cache] Error clearing caches:', err);
           });
         }
       })();
